@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject SignInManager<IdentityUser> _signInManager;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -17,13 +19,27 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                    <ul class="navbar-nav ml-auto">
+                        @if (_signInManager.IsSignedIn(User))
+                        {
+                            @using (Html.BeginForm("LogOut", "Account", FormMethod.Post))
+                            {
+                                <li class="nav-item">
+                                    <button type="submit" class="nav-link btn btn-link text-dark" style="width: auto;">
+                                        Hi, @User.Identity.Name | Logout
+                                    </button>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                @Html.ActionLink("Sign Up", "Registration", "Account", "", new { @class = "nav-link text-dark" })
+                            </li>
+                            <li class="nav-item">
+                                @Html.ActionLink("Login", "Login", "Account", "", new { @class = "nav-link text-dark" })
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
