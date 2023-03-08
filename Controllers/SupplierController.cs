@@ -1,38 +1,37 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using CapstoneGroupProject.Models;
 using CapstoneGroupProject.ViewModels;
-using Microsoft.IdentityModel.Protocols;
 using CapstoneGroupProject.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace CapstoneGroupProject.Controllers
 {
     public class SupplierController : Controller
     {
+        //inject DB
         private readonly AppDbContext _appDbContext;
 
+        //new constructor for DB
         public SupplierController(AppDbContext appDbContext) 
         {
             _appDbContext = appDbContext;
         }
         // GET: SupplierController
-        public ActionResult Index()
+        public IActionResult Index()
         {
             return View();
         }
 
         // GET: SupplierController/Details/5
-        public ActionResult Details(int id)
+        public IActionResult Details(int id)
         {
             return View();
         }
 
         // GET: SupplierController/Create
-        public ActionResult CreateSupplier()
+        public IActionResult CreateSupplier()
         {
             return View();
         }
@@ -53,11 +52,16 @@ namespace CapstoneGroupProject.Controllers
                 supplier.State = vmSupplier.State;
                 supplier.ZipCode = vmSupplier.ZipCode;
 
-                // Send to DB
-                
+                //How it goes to DB                
                 await _appDbContext.AddAsync(supplier);
                 await _appDbContext.SaveChangesAsync();
-                
+
+                //This shows it in a red message on the screen
+                ModelState.AddModelError(string.Empty, "Supplier was successfully added");
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Couldn't add supplier to database");
             }
             return View();
         }
@@ -71,10 +75,13 @@ namespace CapstoneGroupProject.Controllers
         // POST: SupplierController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(int id, SupplierViewModel vmSupplier)
         {
             try
             {
+                var test = VMToModel(vmSupplier);
+                _appDbContext.Entry(test).State = EntityState.Modified;
+                _appDbContext.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -84,7 +91,7 @@ namespace CapstoneGroupProject.Controllers
         }
 
         // GET: SupplierController/Delete/5
-        public ActionResult Delete(int id)
+        public IActionResult Delete(int id)
         {
             return View();
         }
@@ -92,7 +99,7 @@ namespace CapstoneGroupProject.Controllers
         // POST: SupplierController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> Delete(int id, IFormCollection collection)
         {
             try
             {
@@ -102,6 +109,36 @@ namespace CapstoneGroupProject.Controllers
             {
                 return View();
             }
+        }
+
+        public static ViewModels.SupplierViewModel ModelToVM(Supplier supplier)
+        {
+            ViewModels.SupplierViewModel vmSupplier = new SupplierViewModel();
+            supplier.SupplierID = vmSupplier.SupplierID;
+            supplier.SupplierName = vmSupplier.SupplierName;
+            supplier.Address = vmSupplier.Address;
+            supplier.City = vmSupplier.City;
+            supplier.Email = vmSupplier.Email;
+            supplier.PhoneNumber = vmSupplier.PhoneNumber;
+            supplier.State = vmSupplier.State;
+            supplier.ZipCode = vmSupplier.ZipCode;
+
+            return vmSupplier;
+        }
+
+        public static Supplier VMToModel(SupplierViewModel vmSupplier)
+        {
+            Supplier supplier = new Supplier();
+            vmSupplier.SupplierID = supplier.SupplierID;
+            vmSupplier.SupplierName = supplier.SupplierName;
+            vmSupplier.Address = supplier.Address;
+            vmSupplier.City = supplier.City;
+            vmSupplier.Email = supplier.Email;
+            vmSupplier.PhoneNumber = supplier.PhoneNumber;
+            vmSupplier.State = supplier.State;
+            vmSupplier.ZipCode = supplier.ZipCode;
+
+            return supplier;
         }
     }
 }
