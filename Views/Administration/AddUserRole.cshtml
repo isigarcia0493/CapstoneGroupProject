@@ -1,0 +1,36 @@
+﻿@model List<UserRoleViewModel>
+
+@{
+    ViewData["Title"] = "Add User Role";
+    var roleId = ViewBag.RoleId;
+}
+
+<div class="row">
+    <div class="form-row">
+        @using (Html.BeginForm("AddUserRole", "Administration", FormMethod.Post))
+        {
+            <div class="card">
+                <div class="card-header">
+                    <h3>Add or Remove Users</h3>
+                </div>
+                <div class="card-body">
+                    @for(int i = 0; i < Model.Count; i++)
+                {
+                        <div class="form-check m-1">
+                            @Html.HiddenFor(Model => Model[i].UserId)
+                            @Html.HiddenFor(Model => Model[i].UserName)
+                            @Html.CheckBoxFor(Model => Model[i].IsInRole, new { @class="form-check-input" })
+                            <label class="form-check-label" asp-for="@Model[i].IsInRole">
+                                @Model[i].UserName
+                            </label>
+                        </div>
+                }
+                </div>
+                <div class="card-footer">
+                    <input type="submit" value="Update" class="btn btn-primary" asp-route-roleId="@roleId" style="width:auto" />
+                    @Html.ActionLink("Cancel", "EditRole", "Administration", new { id = roleId }, new { @class = "btn btn-danger" })
+                </div>
+            </div>
+        }
+    </div>
+</div>
