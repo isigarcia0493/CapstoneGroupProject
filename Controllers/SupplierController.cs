@@ -7,11 +7,18 @@ using System.Threading.Tasks;
 using CapstoneGroupProject.Models;
 using CapstoneGroupProject.ViewModels;
 using Microsoft.IdentityModel.Protocols;
+using CapstoneGroupProject.Data;
 
 namespace CapstoneGroupProject.Controllers
 {
     public class SupplierController : Controller
     {
+        private readonly AppDbContext _appDbContext;
+
+        public SupplierController(AppDbContext appDbContext) 
+        {
+            _appDbContext = appDbContext;
+        }
         // GET: SupplierController
         public ActionResult Index()
         {
@@ -33,7 +40,7 @@ namespace CapstoneGroupProject.Controllers
         // POST: SupplierController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateSupplier(SupplierViewModel vmSupplier)
+        public async Task<IActionResult> CreateSupplier(SupplierViewModel vmSupplier)
         {
             if (ModelState.IsValid)
             {
@@ -48,12 +55,15 @@ namespace CapstoneGroupProject.Controllers
 
                 // Send to DB
                 
+                await _appDbContext.AddAsync(supplier);
+                await _appDbContext.SaveChangesAsync();
+                
             }
             return View();
         }
 
         // GET: SupplierController/Edit/5
-        public ActionResult Edit(int id)
+        public IActionResult Edit(int id)
         {
             return View();
         }

@@ -16,5 +16,8 @@ namespace CapstoneGroupProject.Models
         [ForeignKey("ID")]
         public string ID { get; set; }
 
+        //Add other employee information in here.
+        //First/LastName/IsActive/HireDate/etc
+
     }
 }
