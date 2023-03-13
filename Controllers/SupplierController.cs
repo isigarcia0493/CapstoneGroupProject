@@ -43,14 +43,16 @@ namespace CapstoneGroupProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                Supplier supplier = new Supplier();
-                supplier.SupplierName = vmSupplier.SupplierName;
-                supplier.Address = vmSupplier.Address;
-                supplier.City = vmSupplier.City;
-                supplier.Email = vmSupplier.Email;
-                supplier.PhoneNumber = vmSupplier.PhoneNumber;
-                supplier.State = vmSupplier.State;
-                supplier.ZipCode = vmSupplier.ZipCode;
+                Supplier supplier = new Supplier
+                {
+                    SupplierName = vmSupplier.SupplierName,
+                    Address = vmSupplier.Address,
+                    City = vmSupplier.City,
+                    Email = vmSupplier.Email,
+                    PhoneNumber = vmSupplier.PhoneNumber,
+                    State = vmSupplier.State,
+                    ZipCode = vmSupplier.ZipCode
+                };
 
                 //How it goes to DB                
                 await _appDbContext.AddAsync(supplier);
@@ -75,7 +77,7 @@ namespace CapstoneGroupProject.Controllers
         // POST: SupplierController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, SupplierViewModel vmSupplier)
+        public IActionResult Edit(int id, SupplierViewModel vmSupplier)
         {
             try
             {
@@ -99,7 +101,7 @@ namespace CapstoneGroupProject.Controllers
         // POST: SupplierController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int id, IFormCollection collection)
+        public IActionResult Delete(int id, IFormCollection collection)
         {
             try
             {

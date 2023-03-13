@@ -9,6 +9,7 @@
     <div class="form-row">
         @using (Html.BeginForm("AddUserRole", "Administration", FormMethod.Post))
         {
+            @Html.AntiForgeryToken()
             <div class="card">
                 <div class="card-header">
                     <h3>Add or Remove Users</h3>

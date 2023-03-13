@@ -10,6 +10,7 @@
     <div class="form-row">
         @using (Html.BeginForm("CreateRole", "Administration", FormMethod.Post))
         {
+            @Html.AntiForgeryToken()
             @Html.ValidationSummary("", new { @class="text-danger" })
             <div class="form-group">
                 @Html.LabelFor(model => model.RoleName, new { @class="required" })

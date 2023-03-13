@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace CapstoneGroupProject.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdministrationController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -34,6 +35,7 @@ namespace CapstoneGroupProject.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateRole(CreateRoleViewModel model)
         {
             if (ModelState.IsValid)
@@ -94,6 +96,7 @@ namespace CapstoneGroupProject.Controllers
             return View(model);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditRole(EditRoleViewModel model)
         {
             var role = await _roleManager.FindByIdAsync(model.RoleId);
@@ -124,20 +127,20 @@ namespace CapstoneGroupProject.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AddUserRole (string roleId)
+        public async Task<IActionResult> AddUserRole(string roleId)
         {
             ViewBag.RoleId = roleId;
 
             var role = await _roleManager.FindByIdAsync(roleId);
 
-            if(role == null)
+            if (role == null)
             {
                 return RedirectToAction("Error", "Home");
             }
 
             var model = new List<UserRoleViewModel>();
 
-            foreach(var user in _userManager.Users)
+            foreach (var user in _userManager.Users)
             {
                 var userRoleVM = new UserRoleViewModel
                 {
@@ -145,7 +148,7 @@ namespace CapstoneGroupProject.Controllers
                     UserName = user.UserName,
                 };
 
-                if(await _userManager.IsInRoleAsync(user, role.Name))
+                if (await _userManager.IsInRoleAsync(user, role.Name))
                 {
                     userRoleVM.IsInRole = true;
                 }
@@ -161,16 +164,17 @@ namespace CapstoneGroupProject.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddUserRole(List<UserRoleViewModel> model, string roleId)
         {
             var role = await _roleManager.FindByIdAsync(roleId);
 
-            if(role == null)
+            if (role == null)
             {
                 return RedirectToAction("Error", "Home");
             }
 
-            for(int i = 0; i< model.Count; i++)
+            for (int i = 0; i < model.Count; i++)
             {
                 var user = await _userManager.FindByIdAsync(model[i].UserId);
                 IdentityResult result = null;
@@ -190,7 +194,7 @@ namespace CapstoneGroupProject.Controllers
 
                 if (result.Succeeded)
                 {
-                    if(i < (model.Count - 1))
+                    if (i < (model.Count - 1))
                     {
                         continue;
                     }
@@ -204,5 +208,114 @@ namespace CapstoneGroupProject.Controllers
             return RedirectToAction("EditRole", new { id = roleId });
         }
 
+        [HttpGet]
+        public IActionResult AllUsers()
+        {
+            var users = _userManager.Users.ToList();
+            return View(users);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user == null)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+
+            var userModel = new EditUserViewModel
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                Email = user.Email
+            };
+
+            return View(userModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditUser(EditUserViewModel model)
+        {
+            var user = await _userManager.FindByIdAsync(model.Id);
+
+            if (user == null)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+            else
+            {
+                user.UserName = model.UserName;
+                user.Email = model.Email;
+
+                if (user.UserName != user.Email)
+                {
+                    ViewBag.ErrorMessage = "Please make sure both are the same.";
+
+                    return View(model);
+                }
+
+                var result = await _userManager.UpdateAsync(user);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("AllUsers");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+                return View(model);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user == null)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+            else
+            {
+
+                return View(user);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteUser(IdentityUser model)
+        {
+            var user = await _userManager.FindByIdAsync(model.Id);
+
+            if(user == null)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+            else
+            {
+                var result = await _userManager.DeleteAsync(user);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("AllUsers");
+                }
+                
+                foreach(var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+                return View("AllUsers");
+            }
+        }
+
     }
+    
 }

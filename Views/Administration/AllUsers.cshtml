@@ -1,0 +1,48 @@
+﻿@model IEnumerable<IdentityUser>
+
+@{
+    ViewData["Title"] = "Users";
+}
+
+<h1>List of Users</h1>
+
+<div>
+    @Html.ActionLink("Add User", "Registration", "Account", "", new { @class="btn btn-success" } )
+</div>
+
+@if (Model.Any())
+{
+    <div class="table table-striped">
+        <table>
+            <tr>
+                <th>Users</th>
+                <th>Actions</th>
+            </tr>
+            @foreach (var user in Model)
+            {
+            <tr>
+                <td>
+                        @user.UserName
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditUser", "Administration", new { id = user.Id }, new { @class="btn btn-primary" })
+                    @Html.ActionLink("Delete", "DeleteUser", "Administration", new { id = user.Id }, new { @class="btn btn-danger" })
+                </td>
+            </tr>
+            }
+        </table>
+    </div>
+}
+else
+{
+    <div class="table table-striped">
+        <table>
+            <tr>
+                <th>Users</th>
+            </tr>
+            <tr>
+                <td>No Users Yet</td>
+            </tr>
+        </table>
+    </div>
+}
