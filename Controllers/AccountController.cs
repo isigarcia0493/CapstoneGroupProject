@@ -65,7 +65,14 @@ namespace CapstoneGroupProject.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            return View();
+            if (_signInManager.IsSignedIn(User))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         [HttpPost]
@@ -99,7 +106,7 @@ namespace CapstoneGroupProject.Controllers
         public async Task<IActionResult> LogOut()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login");
         }
     }
 }
