@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using CapstoneGroupProject.Models;
+using CapstoneGroupProject.ViewModels;
+using CapstoneGroupProject.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +10,17 @@ using System.Threading.Tasks;
 
 namespace CapstoneGroupProject.Controllers
 {
+
+ 
+
     public class ProductController : Controller
     {
+        private readonly AppDbContext _appDbContext;
+
+        public ProductController(AppDbContext appDbContext)
+        {
+            _appDbContext = appDbContext;
+        }
         // GET: ProductController
         public ActionResult Index()
         {
