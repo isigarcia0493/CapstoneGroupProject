@@ -50,7 +50,7 @@
                         <li class="nav-item">
                             @Html.ActionLink("Privacy", "Privacy", "Home", "", new { @class = "nav-link text-dark" })
                         </li>
-                        @if (_signInManager.IsSignedIn(User)) && User.IsInRole("Admin"))
+                        @if(_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
                                 @Html.ActionLink("Roles", "ListRoles", "Administration", "", new { @class = "nav-link text-dark" })

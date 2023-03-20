@@ -1,7 +1,4 @@
-﻿using CapstoneGroupProject.Data;
-using CapstoneGroupProject.Models;
-using CapstoneGroupProject.ViewModels;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,9 +9,6 @@ namespace CapstoneGroupProject.Controllers
 {
     public class OrderController : Controller
     {
-        //inject DB
-        private readonly AppDbContext _appDbContext;
-
         // GET: OrderController
         public ActionResult Index()
         {
@@ -36,30 +30,16 @@ namespace CapstoneGroupProject.Controllers
         // POST: OrderController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateOrder(OrderViewModel vmOrder)
+        public ActionResult Create(IFormCollection collection)
         {
-            if (ModelState.IsValid)
+            try
             {
-                Order order = new Order
-                {
-                    OrderID = vmOrder.OrderID,
-                    OrderDate = vmOrder.OrderDate,
-                    OrderTotal = vmOrder.OrderTotal,
-                    OrderDetails = vmOrder.OrderDetails
-                };
-
-                //How it goes to DB                
-                await _appDbContext.AddAsync(order);
-                await _appDbContext.SaveChangesAsync();
-
-                //This shows it in a red message on the screen
-                ModelState.AddModelError(string.Empty, "Order was successfully added");
+                return RedirectToAction(nameof(Index));
             }
-            else
+            catch
             {
-                ModelState.AddModelError(string.Empty, "Couldn't add order to database");
+                return View();
             }
-            return View();
         }
 
         // GET: OrderController/Edit/5
