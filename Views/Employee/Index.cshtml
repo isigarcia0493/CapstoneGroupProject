@@ -19,17 +19,24 @@
                 @Html.ActionLink("Add New Employee", "CreateEmployee", "Employee", "", new { @class = "btn btn-success" })
             </th>
         </tr>
-        @*@foreach (var employee in Model)
+        @foreach (var employee in Model)
         {
             <tr>
-                <td>@employee.</td>
-                <td>@image.Album.Name</td>
-                <td style="text-align: center;"><img src="@image.ImageUrl" alt="@image.ShortDescription" width="50" height="50" /></td>
+                <td>@employee.FirstName + @employee.LastName</td>
+                <td>@employee.User.UserName</td>
+                @if(employee.IsActive == true)
+                {
+                    <td>Active</td>
+                }
+                else
+                {
+                    <td>Inactive</td>
+                }
                 <td style="text-align: center;">
                     @Html.ActionLink("Details", "ImageDetails", "Image", new { id = image.ImageId }, new { @class = "btn btn-primary" }) |
                     @Html.ActionLink("Delete", "DeleteImage", "Image", new { id = image.ImageId }, new { @class = "btn btn-danger" })
                 </td>
             </tr>
-        }*@
+        }
     </table>
 </div>
