@@ -1,4 +1,5 @@
-﻿using CapstoneGroupProject.ViewModels;
+﻿using CapstoneGroupProject.Models;
+using CapstoneGroupProject.ViewModels;
 using CapstoneGroupProject.ViewModels.Administration;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -14,9 +15,9 @@ namespace CapstoneGroupProject.Controllers
     public class AdministrationController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public AdministrationController(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
+        public AdministrationController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
         {
             _roleManager = roleManager;
             _userManager = userManager;
@@ -290,7 +291,7 @@ namespace CapstoneGroupProject.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteUser(IdentityUser model)
+        public async Task<IActionResult> DeleteUser(ApplicationUser model)
         {
             var user = await _userManager.FindByIdAsync(model.Id);
 
