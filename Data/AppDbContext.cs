@@ -19,6 +19,7 @@ namespace CapstoneGroupProject.Data
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<Employee> Employee { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
