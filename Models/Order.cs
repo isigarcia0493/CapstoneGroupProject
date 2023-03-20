@@ -24,10 +24,6 @@ namespace CapstoneGroupProject.Models
         public decimal OrderTotal { get; set; }
 
         //Relationships
-        public int EmployeeId { get; set; }
-        [ForeignKey("EmployeeId")]
-        public Employee Employee { get; set; }
-
         public IEnumerable<OrderDetails> OrderDetails { get; set; }
     }
 }
