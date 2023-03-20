@@ -15,9 +15,9 @@ namespace CapstoneGroupProject.Controllers
     public class AdministrationController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public AdministrationController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
+        public AdministrationController(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
         {
             _roleManager = roleManager;
             _userManager = userManager;
@@ -291,7 +291,7 @@ namespace CapstoneGroupProject.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteUser(ApplicationUser model)
+        public async Task<IActionResult> DeleteUser(IdentityUser model)
         {
             var user = await _userManager.FindByIdAsync(model.Id);
 
