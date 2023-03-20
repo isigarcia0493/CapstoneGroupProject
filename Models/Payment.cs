@@ -20,7 +20,6 @@ namespace CapstoneGroupProject.Models
 
         //Relationships
         public int OrderID { get; set; }
-
         [ForeignKey("OrderID")]
         public Order Order { get; set; }
     }
