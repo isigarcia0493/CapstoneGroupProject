@@ -1,57 +1,64 @@
 ﻿@model IEnumerable<Employee>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Employees";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table table-striped">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HireDate)
-            </th>
-            <th>
-                @Html.DisplayName("Status")
-            </th>
-            <th>Actions</th>
-        </tr>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HireDate)
-            </td>
-            <td>
-                @if(item.IsActive == true)
+<div class="mainWrapper">
+    <div class="containerList">
+        <div class="tableList">
+            <div class="header">
+                <h1>All Employees</h1>
+            </div>
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LastName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.HireDate)
+                    </th>
+                    <th>
+                        @Html.DisplayName("Status")
+                    </th>
+                    <th style="text-align: center;">
+                        @Html.ActionLink("Add Employee", "Create", "Employee", "", new{ @class="btn btn-success" })
+                    </th>
+                </tr>
+                @foreach (var item in Model)
                 {
-                    @Html.DisplayName("Active")
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.HireDate)
+                        </td>
+                        <td>
+                            @if (item.IsActive == true)
+                            {
+                                @Html.DisplayName("Active")
 
+                            }
+                            else
+                            {
+                                @Html.DisplayName("Inactive")
+                            }
+                        </td>
+                        <td style="text-align: center;">
+                            @Html.ActionLink("Edit", "Edit", "Employee", new { id = item.EmployeeID}, new{ @class="btn btn-primary" }) |
+                            @Html.ActionLink("Details", "Details", "Employee", new { id = item.EmployeeID}, new{ @class="btn btn-secondary" }) |
+                            @Html.ActionLink("Delete", "Delete", "Employee", new { id = item.EmployeeID}, new{ @class="btn btn-danger" })
+                        </td>
+                    </tr>
                 }
-                else
-                {
-                    @Html.DisplayName("Inactive")
-                }
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.EmployeeID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.EmployeeID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.EmployeeID">Delete</a>
-            </td>
-        </tr>
-}
-</table>
+            </table>
+        </div>
+    </div>
+</div>

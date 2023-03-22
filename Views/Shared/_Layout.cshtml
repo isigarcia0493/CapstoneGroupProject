@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - CapstoneGroupProject</title>
+    <title>@ViewData["Title"] - Sales System</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="~/css/CustomSite.css" rel="stylesheet" />
@@ -13,8 +13,8 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CapstoneGroupProject</a>
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Sales System</a><i class="bi bi-currency-dollar"></i>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -43,20 +43,8 @@
                         }
                     </ul>
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            @Html.ActionLink("Home", "Index", "Home", "", new { @class = "nav-link text-dark" })
-                        </li>
-                        <li class="nav-item">
-                            @Html.ActionLink("Privacy", "Privacy", "Home", "", new { @class = "nav-link text-dark" })
-                        </li>
                         @if(_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                         {
-                            <li class="nav-item">
-                                @Html.ActionLink("Roles", "ListRoles", "Administration", "", new { @class = "nav-link text-dark" })
-                            </li>
-                            <li class="nav-item">
-                                @Html.ActionLink("Users", "AllUsers", "Administration", "", new { @class = "nav-link text-dark" })
-                            </li>
                             <li class="nav-item">
                                 @Html.ActionLink("Employees", "Index", "Employee", "", new { @class = "nav-link text-dark" })
                             </li>
@@ -66,13 +54,19 @@
                             <li class="nav-item">
                                 @Html.ActionLink("Order", "CreateOrder", "Order", "", new { @class = "nav-link text-dark" })
                             </li>
+                            <li class="nav-item">
+                                @Html.ActionLink("Roles", "ListRoles", "Administration", "", new { @class = "nav-link text-dark" })
+                            </li>
+                            <li class="nav-item">
+                                @Html.ActionLink("Users", "AllUsers", "Administration", "", new { @class = "nav-link text-dark" })
+                            </li>
                         }
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container-fluid">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
