@@ -31,6 +31,8 @@ namespace CapstoneGroupProject.Models
         public decimal Total { get; set; }
 
         //Relationships
+        public int OrderId { get; set; }
+        [ForeignKey("OrderId")]
         public Order Order { get; set; }
     }
 }

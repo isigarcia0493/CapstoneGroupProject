@@ -4,14 +4,16 @@ using CapstoneGroupProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CapstoneGroupProject.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230320190817_EmployeeModelUpdated")]
+    partial class EmployeeModelUpdated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,6 +68,9 @@ namespace CapstoneGroupProject.Migrations
                     b.Property<DateTime>("HireDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("ID")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -84,12 +89,17 @@ namespace CapstoneGroupProject.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
+                    b.Property<string>("UserID")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ZipCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(5)")
                         .HasMaxLength(5);
 
                     b.HasKey("EmployeeID");
+
+                    b.HasIndex("ID");
 
                     b.ToTable("Employees");
                 });
@@ -124,7 +134,7 @@ namespace CapstoneGroupProject.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("OrderId")
+                    b.Property<int>("OrderID")
                         .HasColumnType("int");
 
                     b.Property<decimal>("OrderPrice")
@@ -138,7 +148,7 @@ namespace CapstoneGroupProject.Migrations
 
                     b.HasKey("OrderDetailID");
 
-                    b.HasIndex("OrderId");
+                    b.HasIndex("OrderID");
 
                     b.ToTable("OrderDetails");
                 });
@@ -310,6 +320,10 @@ namespace CapstoneGroupProject.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
@@ -361,6 +375,8 @@ namespace CapstoneGroupProject.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -443,10 +459,24 @@ namespace CapstoneGroupProject.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("CapstoneGroupProject.Models.ApplicationUser", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.HasDiscriminator().HasValue("ApplicationUser");
+                });
+
+            modelBuilder.Entity("CapstoneGroupProject.Models.Employee", b =>
+                {
+                    b.HasOne("CapstoneGroupProject.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("ID");
+                });
+
             modelBuilder.Entity("CapstoneGroupProject.Models.Order", b =>
                 {
                     b.HasOne("CapstoneGroupProject.Models.Employee", "Employee")
-                        .WithMany("Orders")
+                        .WithMany()
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -456,7 +486,7 @@ namespace CapstoneGroupProject.Migrations
                 {
                     b.HasOne("CapstoneGroupProject.Models.Order", "Order")
                         .WithMany("OrderDetails")
-                        .HasForeignKey("OrderId")
+                        .HasForeignKey("OrderID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

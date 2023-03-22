@@ -1,4 +1,5 @@
 using CapstoneGroupProject.Data;
+using CapstoneGroupProject.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

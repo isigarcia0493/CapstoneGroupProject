@@ -1,4 +1,5 @@
-﻿using CapstoneGroupProject.ViewModels;
+﻿using CapstoneGroupProject.Models;
+using CapstoneGroupProject.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

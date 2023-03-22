@@ -1,23 +1,31 @@
-﻿@model SupplierViewModel
+﻿@model Employee
 
 @{
-    ViewData["Title"] = "CreateSupplier";
+    ViewData["Title"] = "Create";
 }
 
-<h1>Create Supplier</h1>
+<h1>Create</h1>
 
-<h4>Supplier</h4>
+<h4>Employee</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        @using (Html.BeginForm("CreateSupplier", "Supplier", FormMethod.Post))
-        {
-        <form asp-action="CreateSupplier">
+        <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="SupplierName" class="control-label"></label>
-                <input asp-for="SupplierName" class="form-control" />
-                <span asp-validation-for="SupplierName" class="text-danger"></span>
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="control-label"></label>
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Address" class="control-label"></label>
@@ -40,28 +48,19 @@
                 <span asp-validation-for="ZipCode" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PhoneNumber" class="control-label"></label>
-                <input asp-for="PhoneNumber" class="form-control" />
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                <label asp-for="HireDate" class="control-label"></label>
+                <input asp-for="HireDate" class="form-control" />
+                <span asp-validation-for="HireDate" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+                </label>
             </div>
             <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
-            <div class="form-group">
-                <input type="submit" value="Add Supplier" class="btn btn-primary" />
-            </div>
-
-            @*<div>
-                Will want something like this for our Search
-
-                @Html.ActionLink("Edit Supplier", "Edit", "Supplier", new { id = Model.SupplierID })
-            </div>*@
-
         </form>
-        }
-
     </div>
 </div>
 
