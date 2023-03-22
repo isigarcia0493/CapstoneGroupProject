@@ -69,7 +69,7 @@ namespace CapstoneGroupProject.Controllers
         }
 
         // GET: SupplierController/Edit/5
-        public IActionResult Edit(int id)
+        public IActionResult EditSupplier(int id)
         {
             return View();
         }
@@ -77,7 +77,7 @@ namespace CapstoneGroupProject.Controllers
         // POST: SupplierController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, SupplierViewModel vmSupplier)
+        public IActionResult EditSupplier(int id, SupplierViewModel vmSupplier)
         {
             try
             {
@@ -93,7 +93,7 @@ namespace CapstoneGroupProject.Controllers
         }
 
         // GET: SupplierController/Delete/5
-        public IActionResult Delete(int id)
+        public IActionResult DeleteSupplier(int id)
         {
             return View();
         }
@@ -101,7 +101,7 @@ namespace CapstoneGroupProject.Controllers
         // POST: SupplierController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int id, IFormCollection collection)
+        public IActionResult DeleteSupplier(int id, IFormCollection collection)
         {
             try
             {
