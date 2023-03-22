@@ -6,15 +6,11 @@
     background-size: cover;
 }
 
-.mainWrapper {
-
-}
-
 footer {
     background-color: #fff !important;
 }
 
-.containerList{
+.mainWrapper{
     width: 80%;
     margin-right: auto;
     margin-left: auto;
@@ -36,4 +32,20 @@ footer {
     margin-left: auto;
     margin-right: auto;
     padding: 0% 0% 2% 0%;
+}
+
+.createForm {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0% 0% 2% 0%;
+}
+
+.formInput {
+    margin: 4%;
+}
+
+label{
+    font-weight: bold;
+    font-size: large;
 }
