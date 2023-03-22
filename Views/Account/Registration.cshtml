@@ -2,31 +2,46 @@
 
 @{
     ViewData["Title"] = "Registration Form";
+    Layout = null;
 }
 
-<div class="row">
-    <div class="form-row">
-        @using (Html.BeginForm("Registration", "Account", FormMethod.Post))
-        {
-            @Html.ValidationSummary("", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.LabelFor(model => model.UserEmail, new { @class = "required" })
-                @Html.EditorFor(model => model.UserEmail, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UserEmail, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Password, new { @class = "required" })
-                @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.PasswordConfirmation, new { @class = "required" })
-                @Html.PasswordFor(model => model.PasswordConfirmation, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.PasswordConfirmation, "", new { @class = "text-danger" })
-            </div>         
-            <div class="form-group">
-                <input type="submit" value="Register" class="btn btn-primary" />
-            </div>
-        }
+<link href="~/css/site.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link href="~/css/loginregister.css" rel="stylesheet" />
+
+<div class="registrationCard">
+    <div class="registrationBody">
+        <div class="registerImage">
+            <img src="~/images/Register.png" alt="Register Icon" width="350" height="200" />
+        </div>
+        <div class="registerForm">
+            <div class="row">
+                @using (Html.BeginForm("Registration", "Account", FormMethod.Post))
+            {
+                @if (!ViewData.ModelState.IsValid)
+                {
+                    <div class="alert alert-danger" role="alert">
+                        @Html.ValidationSummary("", new { @class = "text-danger" })
+                    </div>
+                } 
+                <div class="form-group col-12 mb-5">
+                    @Html.EditorFor(model => model.UserEmail, new { htmlAttributes = new { @class = "form-control", placeholder = "Email" } })
+                    @Html.ValidationMessageFor(model => model.UserEmail, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-12 mb-5">
+                    @Html.PasswordFor(model => model.Password, new { @class = "form-control", placeholder = "Password" })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-12 mb-5">
+                    @Html.PasswordFor(model => model.PasswordConfirmation, new { @class = "form-control", placeholder = "Confirm Password" })
+                    @Html.ValidationMessageFor(model => model.PasswordConfirmation, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group offset-3">
+                    <input type="submit" value="Register" class="btn btn-primary btn-lg" /> |
+                    @Html.ActionLink("Log In", "LogIn", "Account", "", new { @class= "btn btn-success btn-lg" })
+                </div>
+            }
+            </div>            
+        </div>
     </div>
-</div>
+</div> 
