@@ -1,19 +1,18 @@
-﻿@model SupplierViewModel
+﻿@model CapstoneGroupProject.Models.Supplier
 
 @{
-    ViewData["Title"] = "CreateSupplier";
+    ViewData["Title"] = "EditSupplier";
 }
 
-<h1>Create Supplier</h1>
+<h1>EditSupplier</h1>
 
 <h4>Supplier</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        @using (Html.BeginForm("CreateSupplier", "Supplier", FormMethod.Post))
-        {
-        <form asp-action="CreateSupplier">
+        <form asp-action="EditSupplier">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="SupplierID" />
             <div class="form-group">
                 <label asp-for="SupplierName" class="control-label"></label>
                 <input asp-for="SupplierName" class="form-control" />
@@ -50,18 +49,9 @@
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Add Supplier" class="btn btn-primary" />
+                <input type="submit" value="Edit Supplier Information" class="btn btn-primary" />
             </div>
-
-            @*<div>
-                Will want something like this for our Search
-
-                @Html.ActionLink("Edit Supplier", "Edit", "Supplier", new { id = Model.SupplierID })
-            </div>*@
-
         </form>
-        }
-
     </div>
 </div>
 
