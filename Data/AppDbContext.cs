@@ -4,6 +4,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using System.Reflection.Emit;
 using System;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using CapstoneGroupProject.ViewModels;
 
 namespace CapstoneGroupProject.Data
 {
@@ -29,5 +30,7 @@ namespace CapstoneGroupProject.Data
             builder.Entity<OrderDetails>().HasOne(od => od.Order).WithMany(o => o.OrderDetails).IsRequired();
             builder.Entity<Order>().HasOne(e => e.Employee).WithMany(e => e.Orders).IsRequired();
         }
+
+        public DbSet<CapstoneGroupProject.ViewModels.ProductViewModel> ProductViewModel { get; set; }
     }
 }
