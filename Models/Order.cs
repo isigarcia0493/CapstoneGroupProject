@@ -23,7 +23,10 @@ namespace CapstoneGroupProject.Models
         [Column(TypeName = "decimal(20,2)")]
         public decimal OrderTotal { get; set; }
 
-        //Relationships
+        public int EmployeeId { get; set; }
+        [ForeignKey("EmployeeId")]
+        public Employee Employee { get; set; }
+
         public IEnumerable<OrderDetails> OrderDetails { get; set; }
     }
 }

@@ -19,6 +19,7 @@ namespace CapstoneGroupProject.Data
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<Employee> Employees { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -26,6 +27,7 @@ namespace CapstoneGroupProject.Data
 
             builder.Entity<Product>().HasOne(p => p.Category).WithMany(c => c.Product).IsRequired();
             builder.Entity<OrderDetails>().HasOne(od => od.Order).WithMany(o => o.OrderDetails).IsRequired();
+            builder.Entity<Order>().HasOne(e => e.Employee).WithMany(e => e.Orders).IsRequired();
         }
     }
 }

@@ -9,9 +9,26 @@
     <Compile Remove="Migrations\20230305170216_SetDecimals.Designer.cs" />
     <Compile Remove="Migrations\20230320190519_EmployeeModel.cs" />
     <Compile Remove="Migrations\20230320190519_EmployeeModel.Designer.cs" />
+    <Compile Remove="Migrations\20230322000710_Employee.cs" />
+    <Compile Remove="Migrations\20230322000710_Employee.Designer.cs" />
+    <Compile Remove="Migrations\20230322000943_Employee.cs" />
+    <Compile Remove="Migrations\20230322000943_Employee.Designer.cs" />
+    <Compile Remove="Migrations\20230322001339_Employee.cs" />
+    <Compile Remove="Migrations\20230322001339_Employee.Designer.cs" />
+    <Compile Remove="Migrations\20230322002001_Employees.cs" />
+    <Compile Remove="Migrations\20230322002001_Employees.Designer.cs" />
+    <Compile Remove="Migrations\20230322002204_DeleteEmployees.cs" />
+    <Compile Remove="Migrations\20230322002204_DeleteEmployees.Designer.cs" />
+    <Compile Remove="Migrations\20230322002617_DeleteEmployees.cs" />
+    <Compile Remove="Migrations\20230322002617_DeleteEmployees.Designer.cs" />
+    <Compile Remove="Migrations\20230322002821_DeleteEmployees-IgnoreChanges.cs" />
+    <Compile Remove="Migrations\20230322002821_DeleteEmployees-IgnoreChanges.Designer.cs" />
+    <Compile Remove="Migrations\20230322002902_DeleteEmployees.cs" />
+    <Compile Remove="Migrations\20230322002902_DeleteEmployees.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="bootstrap" Version="5.2.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.28" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.28" />
