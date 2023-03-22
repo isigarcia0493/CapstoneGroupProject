@@ -36,7 +36,7 @@ namespace CapstoneGroupProject.Controllers
         // GET: OrderController/Create
         public IActionResult CreateOrder()
         {
-            return View();
+            return View("CreateOrderView");
         }
 
         // POST: OrderController/Create
