@@ -5,6 +5,8 @@ using CapstoneGroupProject.Models;
 using CapstoneGroupProject.ViewModels;
 using CapstoneGroupProject.Data;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 
 namespace CapstoneGroupProject.Controllers
 {
@@ -19,9 +21,17 @@ namespace CapstoneGroupProject.Controllers
             _appDbContext = appDbContext;
         }
         // GET: SupplierController
-        public IActionResult Index()
+        public IActionResult IndexSupplier()
         {
-            return View();
+            try
+            {
+                var suppliers = _appDbContext.Suppliers.ToList();
+                return View(suppliers);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         // GET: SupplierController/Details/5
@@ -60,17 +70,29 @@ namespace CapstoneGroupProject.Controllers
 
                 //This shows it in a red message on the screen
                 ModelState.AddModelError(string.Empty, "Supplier was successfully added");
+                return RedirectToAction("IndexSupplier");
             }
             else
             {
                 ModelState.AddModelError(string.Empty, "Couldn't add supplier to database");
             }
-            return View();
+            return View(vmSupplier);
         }
 
         // GET: SupplierController/Edit/5
         public IActionResult EditSupplier(int id)
         {
+            try
+            {
+                var supplier = _appDbContext.Employees.Find(id);
+
+                return View(supplier);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
             return View();
         }
 
