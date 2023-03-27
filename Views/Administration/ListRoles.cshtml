@@ -4,37 +4,41 @@
     ViewData["Title"] = "All Roles";
 }
 
-<h1>All Roles</h1>
+<div class="mainWrapper">
+    <div class="tableList">
+        <div class="header">
+            <h1>All Roles</h1>
+        </div>
 
-@if (Model.Any())
-{
-    @Html.ActionLink("Add New Role", "CreateRole", "Administration", "", new { @class = "btn btn-primary mb-3" })
-    <br />
-    foreach (var role in Model)
-    {
-        <div class="card mb-3">
-            <div class="card-header">
-                Role Id: @role.Id
+        @if (Model.Any())
+        {
+            @Html.ActionLink("Add New Role", "CreateRole", "Administration", "", new { @class = "btn btn-primary mb-3" })
+            <br />
+            foreach (var role in Model)
+            {
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">@role.Name</h5>
+                    </div>
+                    <div class="card-footer">
+                        @Html.ActionLink("Edit", "EditRole", "Administration", new { id = role.Id }, new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Delete", "DeleteRole", "Administration", new { id = role.Id }, new { @class = "btn btn-danger" })
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="card">
+                <div class="card-header">
+                    There is no role yet!
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Please add a new role</h5>
+                    @Html.ActionLink("Add New Role", "CreateRole", "Administration", "", new { @class = "btn btn-primary" })
+                </div>
             </div>
-            <div class="card-body">
-                <h5 class="card-title">@role.Name</h5>
-            </div>
-            <div class="card-footer">
-                @Html.ActionLink("Edit", "EditRole", "Administration", new { id = role.Id}, new { @class = "btn btn-primary" })
-                @Html.ActionLink("Delete", "DeleteRole", "Administration", new { id = role.Id}, new { @class = "btn btn-danger" })
-            </div>
-        </div>
-    }
-}
-else
-{
-    <div class="card">
-        <div class="card-header">
-            There is no role yet!
-        </div>
-        <div class="card-body">
-            <h5 class="card-title">Please add a new role</h5>
-            @Html.ActionLink("Add New Role", "CreateRole", "Administration", "", new { @class = "btn btn-primary" })
-        </div>
+        }
+
     </div>
-}
+</div>
