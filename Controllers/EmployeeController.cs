@@ -1,6 +1,8 @@
 ﻿using CapstoneGroupProject.Data;
 using CapstoneGroupProject.Models;
+using CapstoneGroupProject.Models.Enums;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -48,6 +50,8 @@ namespace CapstoneGroupProject.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            Employee model = new Employee();
+
             return View();
         }
 
@@ -57,7 +61,7 @@ namespace CapstoneGroupProject.Controllers
             if (ModelState.IsValid)
             {
                 try
-                {
+                {                    
                     _appDbContext.Employees.AddAsync(model);
                     _appDbContext.SaveChanges();
 

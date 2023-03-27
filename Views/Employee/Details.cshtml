@@ -5,9 +5,9 @@
 }
 
 
-<div>
+<div class="mainWrapper">
     <div class="header">
-        <h1>Details for @Model.FirstName + @Model.LastName </h1>
+        <h1>Details for @Model.FirstName @Model.LastName </h1>
     </div>
     <div class="details">
         <dl class="row mb-5">
@@ -62,7 +62,7 @@
             <dt class="col-sm-6">
                 @Html.DisplayNameFor(model => model.IsActive)
             </dt>
-            <dd class="col-sm-10">
+            <dd class="col-sm-6">
                 @if (Model.IsActive == true)
                 {
                     @Html.DisplayName("Yes")
