@@ -5,6 +5,8 @@ using CapstoneGroupProject.Models;
 using CapstoneGroupProject.ViewModels;
 using CapstoneGroupProject.Data;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 
 namespace CapstoneGroupProject.Controllers
 {
@@ -19,9 +21,17 @@ namespace CapstoneGroupProject.Controllers
             _appDbContext = appDbContext;
         }
         // GET: SupplierController
-        public IActionResult Index()
+        public IActionResult IndexSupplier()
         {
-            return View();
+            try
+            {
+                var suppliers = _appDbContext.Suppliers.ToList();
+                return View(suppliers);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         // GET: SupplierController/Details/5
@@ -39,108 +49,98 @@ namespace CapstoneGroupProject.Controllers
         // POST: SupplierController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateSupplier(SupplierViewModel vmSupplier)
+        public IActionResult CreateSupplier(Supplier model)
         {
             if (ModelState.IsValid)
             {
-                Supplier supplier = new Supplier
+                try
                 {
-                    SupplierName = vmSupplier.SupplierName,
-                    Address = vmSupplier.Address,
-                    City = vmSupplier.City,
-                    Email = vmSupplier.Email,
-                    PhoneNumber = vmSupplier.PhoneNumber,
-                    State = vmSupplier.State,
-                    ZipCode = vmSupplier.ZipCode
-                };
-
-                //How it goes to DB                
-                await _appDbContext.AddAsync(supplier);
-                await _appDbContext.SaveChangesAsync();
-
-                //This shows it in a red message on the screen
-                ModelState.AddModelError(string.Empty, "Supplier was successfully added");
+                    _appDbContext.Suppliers.AddAsync(model);
+                    _appDbContext.SaveChanges();
+                    ModelState.AddModelError(string.Empty, "Supplier was successfully added");
+                    return RedirectToAction("IndexSupplier");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Couldn't add supplier to database");
+                    throw new Exception(ex.ToString());
+                }
             }
             else
             {
-                ModelState.AddModelError(string.Empty, "Couldn't add supplier to database");
+                return View(model);
             }
-            return View();
+
         }
 
         // GET: SupplierController/Edit/5
         public IActionResult EditSupplier(int id)
         {
-            return View();
+            try
+            {
+                var supplier = _appDbContext.Suppliers.Find(id);
+
+                return View(supplier);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         // POST: SupplierController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditSupplier(int id, SupplierViewModel vmSupplier)
+        public IActionResult EditSupplier(Supplier model)
         {
             try
             {
-                var test = VMToModel(vmSupplier);
-                _appDbContext.Entry(test).State = EntityState.Modified;
+                _appDbContext.Entry(model).State = EntityState.Modified;
                 _appDbContext.SaveChanges();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("IndexSupplier");
             }
             catch
             {
-                return View();
+                return View(model);
             }
         }
 
         // GET: SupplierController/Delete/5
         public IActionResult DeleteSupplier(int id)
         {
-            return View();
+            try
+            {
+                var supplier = _appDbContext.Suppliers.Find(id);
+
+                return View(supplier);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         // POST: SupplierController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteSupplier(int id, IFormCollection collection)
+        public IActionResult DeleteSupplier(Supplier model)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var supplier = _appDbContext.Suppliers.Find(model.SupplierID);
+                _appDbContext.Remove(supplier);
+                _appDbContext.SaveChanges();
+
+                return RedirectToAction("IndexSupplier");
+
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                throw new Exception(ex.ToString());
             }
         }
 
-        public static ViewModels.SupplierViewModel ModelToVM(Supplier supplier)
-        {
-            ViewModels.SupplierViewModel vmSupplier = new SupplierViewModel();
-            supplier.SupplierID = vmSupplier.SupplierID;
-            supplier.SupplierName = vmSupplier.SupplierName;
-            supplier.Address = vmSupplier.Address;
-            supplier.City = vmSupplier.City;
-            supplier.Email = vmSupplier.Email;
-            supplier.PhoneNumber = vmSupplier.PhoneNumber;
-            supplier.State = vmSupplier.State;
-            supplier.ZipCode = vmSupplier.ZipCode;
-
-            return vmSupplier;
-        }
-
-        public static Supplier VMToModel(SupplierViewModel vmSupplier)
-        {
-            Supplier supplier = new Supplier();
-            vmSupplier.SupplierID = supplier.SupplierID;
-            vmSupplier.SupplierName = supplier.SupplierName;
-            vmSupplier.Address = supplier.Address;
-            vmSupplier.City = supplier.City;
-            vmSupplier.Email = supplier.Email;
-            vmSupplier.PhoneNumber = supplier.PhoneNumber;
-            vmSupplier.State = supplier.State;
-            vmSupplier.ZipCode = supplier.ZipCode;
-
-            return supplier;
-        }
     }
 }

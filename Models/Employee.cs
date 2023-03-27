@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CapstoneGroupProject.Models.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -15,12 +16,12 @@ namespace CapstoneGroupProject.Models
 
         [Required(ErrorMessage = "Enter a employee first name")]
         [StringLength(50)]
-        [DisplayName("Employee Name")]
+        [DisplayName("Name")]
         public string FirstName { get; set; }
 
         [Required(ErrorMessage = "Enter a employee last name")]
         [StringLength(50)]
-        [DisplayName("Employee Last Name")]
+        [DisplayName("Last Name")]
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Phone number is required")]
@@ -38,10 +39,14 @@ namespace CapstoneGroupProject.Models
         [DisplayName("City")]
         public string City { get; set; }
 
+        [NotMapped]
+        public States States { get; set; }
+
         [Required(ErrorMessage = "State is required")]
         [StringLength(50)]
         [DisplayName("State")]
         public string State { get; set; }
+
 
         [Required(ErrorMessage = "Zip Code is required")]
         [StringLength(5)]

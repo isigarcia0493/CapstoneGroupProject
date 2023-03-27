@@ -5,6 +5,7 @@ using System.Reflection.Emit;
 using System;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using CapstoneGroupProject.ViewModels;
+using CapstoneGroupProject.ViewModels.Order;
 
 namespace CapstoneGroupProject.Data
 {
@@ -31,6 +32,6 @@ namespace CapstoneGroupProject.Data
             builder.Entity<Order>().HasOne(e => e.Employee).WithMany(e => e.Orders).IsRequired();
         }
 
-        public DbSet<CapstoneGroupProject.ViewModels.ProductViewModel> ProductViewModel { get; set; }
+        public DbSet<CapstoneGroupProject.ViewModels.Order.OrderViewModel> OrderViewModel { get; set; }
     }
 }
