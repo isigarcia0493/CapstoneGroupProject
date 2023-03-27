@@ -4,71 +4,78 @@
     ViewData["Title"] = "IndexSupplier";
 }
 
-<h1>List of Suppliers</h1>
 
-<p>
-    <a asp-action="CreateSupplier">Create New</a>
-</p>
-<table class="table table-striped">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.SupplierID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SupplierName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Address)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.City)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.State)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ZipCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>Actions</th>
-    </tr>
-    @foreach (var item in Model)
-    {
-        <tr>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.SupplierID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SupplierName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.City)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.State)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ZipCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                <a asp-action="EditSupplier" asp-route-id="@item.SupplierID">Edit</a> |
-                <a asp-action="DeleteSupplier" asp-route-id="@item.SupplierID">Delete</a>
-            </td>
-        </tr>
-    }
-</table>
+<div class="mainWrapper">
+    <div class="tableList">
+        <div class="header">
+            <h1>List of Suppliers</h1>
+        </div>
+        <p>
+            <a asp-action="CreateSupplier">Create New</a>
+        </p>
+        <table class="table table-striped">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.SupplierID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SupplierName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Address)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.City)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.State)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ZipCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PhoneNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>Actions</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SupplierID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SupplierName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.City)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.State)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ZipCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        <a asp-action="EditSupplier" asp-route-id="@item.SupplierID">Edit</a> |
+                        <a asp-action="DeleteSupplier" asp-route-id="@item.SupplierID">Delete</a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
