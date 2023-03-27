@@ -1,0 +1,78 @@
+﻿body {
+    background-image: radial-gradient(white, black);
+}
+
+.loginCard{
+    box-shadow: 0px 0px 400px lightblue;
+    background-color: gray;
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 7%;
+    border-radius: 20px 20px;
+    color: white;
+    font-weight: bold;
+}
+
+.loginForm{
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.loginBody{
+    padding: 5%;
+}
+
+form{
+    width: 100%;
+    font-size: 1.5rem;
+}
+
+img{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.loginImage {
+    text-align: center;
+    margin-left: 10%;
+    margin-bottom: 5%;
+}
+
+.inputBox:hover{
+    border: solid 1px cyan;
+    box-shadow: 0px 0px 20px cyan;
+}
+
+.alert{
+    font-weight: normal !important;
+    font-size: 1rem !important;
+}
+
+.registrationCard {
+    box-shadow: 0px 0px 400px lightblue;
+    background-color: gray;
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 7%;
+    border-radius: 20px 20px;
+    color: white;
+    font-weight: bold;
+}
+
+.registrationBody {
+    padding: 5%;
+}
+
+.registerForm {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.registerImage {
+    text-align: center;
+    margin-bottom: 5%;
+}

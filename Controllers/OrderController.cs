@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CapstoneGroupProject.Data;
+using CapstoneGroupProject.Models;
+using CapstoneGroupProject.ViewModels.Order;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,6 +12,15 @@ namespace CapstoneGroupProject.Controllers
 {
     public class OrderController : Controller
     {
+        //inject DB
+        private readonly AppDbContext _appDbContext;
+
+        //new constructor for DB
+        public OrderController(AppDbContext appDbContext)
+        {
+            _appDbContext = appDbContext;
+        }
+
         // GET: OrderController
         public ActionResult Index()
         {
@@ -22,26 +34,39 @@ namespace CapstoneGroupProject.Controllers
         }
 
         // GET: OrderController/Create
-        public ActionResult Create()
+        public IActionResult CreateOrder()
         {
-            return View();
+            return View("CreateOrderView");
         }
 
         // POST: OrderController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> CreateOrder(OrderViewModel vmOrder)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+                Order order = new Order
+                {
+                    OrderID = vmOrder.OrderID,
+                    OrderDate = vmOrder.OrderDate,
+                    OrderTotal = vmOrder.OrderTotal,
+                    OrderDetails = vmOrder.OrderDetails,
+                };
 
+                //How it goes to DB                
+                await _appDbContext.AddAsync(order);
+                await _appDbContext.SaveChangesAsync();
+
+                //This shows it in a red message on the screen
+                ModelState.AddModelError(string.Empty, "Order was successfully added");
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Couldn't add order to database");
+            }
+            return View();
+        }
         // GET: OrderController/Edit/5
         public ActionResult Edit(int id)
         {
