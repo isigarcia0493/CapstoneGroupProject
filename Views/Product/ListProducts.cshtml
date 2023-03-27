@@ -24,11 +24,11 @@
             <th>
                 @Html.DisplayNameFor(model => model.Quantity)
             </th>
-            @*<th>
+            <th>
                 @Html.DisplayNameFor(model => model.Supplier.SupplierName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Category.CategoryName)*@
+                @Html.DisplayNameFor(model => model.Category.CategoryName)
             </th>
             <th></th>
         </tr>
@@ -48,14 +48,14 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Quantity)
             </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.Supplier.SupplierName)
+            <td>
+                @Html.DisplayFor(modelItem => item.SupplierID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Category.CategoryName)
-            </td>*@
+                @Html.DisplayFor(modelItem => item.CategoryID)
+            </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ProductID">Edit</a> |
+                <a asp-action="EditProduct" asp-route-id="@item.ProductID">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.ProductID">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.ProductID">Delete</a>
             </td>

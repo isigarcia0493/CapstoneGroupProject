@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace CapstoneGroupProject.Controllers
 {
@@ -78,19 +79,33 @@ namespace CapstoneGroupProject.Controllers
         }
 
         // GET: ProductController/Edit/5
-        public ActionResult Edit(int id)
+        public IActionResult EditProduct(int id)
         {
-            return View();
+            ProductViewModel vmProduct = new ProductViewModel();
+            try
+            {
+                var product = _appDbContext.Products.Find(id);
+                vmProduct = ModelToVM(product);
+                return View(vmProduct);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         // POST: ProductController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public IActionResult EditProduct(int id, ProductViewModel vmProduct)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var test = VMToModel(vmProduct);
+                _appDbContext.Entry(test).State = EntityState.Modified;
+                _appDbContext.SaveChanges();
+                return RedirectToAction("Index");
             }
             catch
             {
@@ -130,12 +145,40 @@ namespace CapstoneGroupProject.Controllers
                 vmProduct.Description = product.Description;
                 vmProduct.UnitPrice = product.UnitPrice;
                 vmProduct.Quantity = product.Quantity;
-                vmProduct.Supplier = product.Supplier;
-                vmProduct.Category = product.Category;
+                vmProduct.SupplierID = product.SupplierID;
+                vmProduct.CategoryID = product.CategoryID;
                 vmList.Add(vmProduct);
             }
 
             return vmList;
+        }
+        public static Product VMToModel(ProductViewModel vmProduct)
+        {
+            Product product = new Product();
+            product.ProductID = vmProduct.ProductID;
+            product.ProductName = vmProduct.ProductName;
+            product.Description = vmProduct.Description;
+            product.UnitPrice = vmProduct.UnitPrice;
+            product.Quantity = vmProduct.Quantity;
+            product.SupplierID = vmProduct.SupplierID;
+            product.CategoryID = vmProduct.CategoryID;
+            
+
+            return product;
+        }
+        public static ProductViewModel ModelToVM(Product product)
+        {
+            ProductViewModel vmproduct = new ProductViewModel();
+            vmproduct.ProductID = product.ProductID;
+            vmproduct.ProductName = product.ProductName;
+            vmproduct.Description = product.Description;
+            vmproduct.UnitPrice = product.UnitPrice;
+            vmproduct.Quantity = product.Quantity;
+            vmproduct.SupplierID = product.SupplierID;
+            vmproduct.CategoryID = product.CategoryID;
+
+
+            return vmproduct;
         }
     }
 }
