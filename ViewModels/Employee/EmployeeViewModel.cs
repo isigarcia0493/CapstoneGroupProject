@@ -1,15 +1,16 @@
-﻿using CapstoneGroupProject.Models.Enums;
+﻿using CapstoneGroupProject.Helpers;
+using CapstoneGroupProject.Models.Enums;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CapstoneGroupProject.Models
+namespace CapstoneGroupProject.ViewModels.Employee
 {
-    public class Employee
+    public class EmployeeViewModel
     {
         [Key]
         public int EmployeeID { get; set; }
@@ -58,6 +59,25 @@ namespace CapstoneGroupProject.Models
         [DisplayName("Is employee active")]
         public bool IsActive { get; set; }
 
-        public IEnumerable<Order> Orders { get; set; } 
+        public IEnumerable<IOrderedQueryable> Orders { get; set; }
+
+        public IEnumerable<SelectListItem> States
+        {
+            get
+            {
+                var options = new List<SelectListItem>();
+
+                foreach (States option in Enum.GetValues(typeof(States)))
+                {
+                    options.Add(new SelectListItem()
+                    {
+                        Text = AttributeExtentions.GetDescription(option),
+                        Value = option.ToString(),
+                    });
+                }
+                return options;
+            }
+        }
     }
 }
+

@@ -1,6 +1,7 @@
 ﻿using CapstoneGroupProject.Data;
 using CapstoneGroupProject.Models;
 using CapstoneGroupProject.Models.Enums;
+using CapstoneGroupProject.ViewModels.Employee;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -50,9 +51,9 @@ namespace CapstoneGroupProject.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            Employee model = new Employee();
+            EmployeeViewModel model = new EmployeeViewModel();
 
-            return View();
+            return View(model);
         }
 
         [HttpPost]
@@ -85,7 +86,21 @@ namespace CapstoneGroupProject.Controllers
             {
                 var employee = _appDbContext.Employees.Find(id);
 
-                return View(employee);
+                EmployeeViewModel employeeVM = new EmployeeViewModel()
+                {
+                    EmployeeID = employee.EmployeeID,
+                    FirstName = employee.FirstName,
+                    LastName = employee.LastName,
+                    PhoneNumber = employee.PhoneNumber,
+                    Address = employee.Address,
+                    City = employee.City,
+                    State = employee.State,
+                    ZipCode = employee.ZipCode,
+                    HireDate = employee.HireDate,
+                    IsActive = employee.IsActive
+                };
+
+                return View(employeeVM);
 
             }catch (Exception ex)
             {
