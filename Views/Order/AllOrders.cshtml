@@ -1,0 +1,41 @@
+﻿@model List<CapstoneGroupProject.ViewModels.Order.OrderViewModel>
+
+@{
+    ViewData["Title"] = "AllOrders";
+}
+
+<h1>AllOrders</h1>
+
+<div>
+    <h4>OrderViewModel</h4>
+    <hr />
+     
+        @foreach (var o in Model)
+        {
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(modelItem => o.OrderID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(modelItem => o.OrderID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(modelItem => o.OrderDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(modelItem => o.OrderDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(modelItem => o.OrderTotal)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(modelItem => o.OrderTotal)
+        </dd>
+    </dl>
+        }
+    
+</div>
+<div>
+    |
+    <a asp-action="Index">Back</a>
+</div>

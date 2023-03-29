@@ -22,8 +22,9 @@ namespace CapstoneGroupProject.Controllers
         }
 
         // GET: OrderController
-        public ActionResult Index()
+        public ActionResult IndexOrder()
         {
+
             return View();
         }
 
@@ -32,11 +33,28 @@ namespace CapstoneGroupProject.Controllers
         {
             return View();
         }
-
+        //GET
+        public ActionResult AllOrders()
+        {
+            try
+            {
+                var orders = _appDbContext.Orders.ToList();
+                List<OrderViewModel> ordersVM = new List<OrderViewModel>();
+                foreach (Order order in orders)
+                {
+                    ordersVM.Add(OrderToOrderVM(order));
+                }
+                return View(ordersVM);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
         // GET: OrderController/Create
         public IActionResult CreateOrder()
         {
-            return View("CreateOrderView");
+            return View();
         }
 
         // POST: OrderController/Create
@@ -107,6 +125,30 @@ namespace CapstoneGroupProject.Controllers
             {
                 return View();
             }
+        }
+
+        private OrderViewModel OrderToOrderVM(Order order)
+        {
+            OrderViewModel orderVM = new OrderViewModel
+            {
+                OrderID = order.OrderID,
+                OrderDate = order.OrderDate,
+                OrderTotal = order.OrderTotal,
+                OrderDetails = order.OrderDetails
+            };
+            return orderVM;
+        }
+
+        private Order OrderVMToOrder (OrderViewModel orderVM)
+        {
+            Order order = new Order
+            {
+                OrderID = orderVM.OrderID,
+                OrderDate = orderVM.OrderDate,
+                OrderTotal = orderVM.OrderTotal,
+                OrderDetails = orderVM.OrderDetails
+            };
+            return order;
         }
     }
 }
