@@ -4,45 +4,58 @@
     ViewData["Title"] = "Users";
 }
 
-<h1>List of Users</h1>
-
-<div>
-    @Html.ActionLink("Add User", "Registration", "Account", "", new { @class="btn btn-success" } )
+<div class="mainWrapper">
+    <div class="tableList">
+        <div class="header mb-5">
+            <h1>List of Users</h1>
+        </div>
+        @if (Model.Any())
+        {
+            <div>
+                <table class="table table-striped table-bordered">
+                    <tr>
+                        <th style="width: 80%;">Users</th>
+                        <th style="width: 20%; text-align: center;">
+                            <div>
+                                @Html.ActionLink("Add User", "Registration", "Account", "", new { @class = "btn btn-success" })
+                            </div>
+                        </th>
+                    </tr>
+                    @foreach (var user in Model)
+                    {
+                        <tr>
+                            <td>
+                                @user.UserName
+                            </td>
+                            <td style="text-align: center;">
+                                @Html.ActionLink("Edit", "EditUser", "Administration", new { id = user.Id }, new { @class = "btn btn-primary" })
+                                @Html.ActionLink("Delete", "DeleteUser", "Administration", new { id = user.Id }, new { @class = "btn btn-danger" })
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        }
+        else
+        {
+            <div>
+                @Html.ActionLink("Add User", "Registration", "Account", "", new { @class = "btn btn-success" })
+            </div>
+            <div class="table table-striped table-bordered">
+                <table>
+                    <tr>
+                        <th>Users</th>
+                    </tr>
+                    <tr>
+                        <td>No Users Yet</td>                      
+                    </tr>
+                </table>
+            </div>
+        }
+    </div>
 </div>
 
-@if (Model.Any())
-{
-    <div class="table table-striped">
-        <table>
-            <tr>
-                <th>Users</th>
-                <th>Actions</th>
-            </tr>
-            @foreach (var user in Model)
-            {
-            <tr>
-                <td>
-                        @user.UserName
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "EditUser", "Administration", new { id = user.Id }, new { @class="btn btn-primary" })
-                    @Html.ActionLink("Delete", "DeleteUser", "Administration", new { id = user.Id }, new { @class="btn btn-danger" })
-                </td>
-            </tr>
-            }
-        </table>
-    </div>
-}
-else
-{
-    <div class="table table-striped">
-        <table>
-            <tr>
-                <th>Users</th>
-            </tr>
-            <tr>
-                <td>No Users Yet</td>
-            </tr>
-        </table>
-    </div>
-}
+
+            
+
+
