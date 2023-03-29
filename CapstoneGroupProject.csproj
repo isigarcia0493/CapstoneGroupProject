@@ -9,6 +9,10 @@
     <Compile Remove="Migrations\20230305170216_SetDecimals.Designer.cs" />
     <Compile Remove="Migrations\20230320190519_EmployeeModel.cs" />
     <Compile Remove="Migrations\20230320190519_EmployeeModel.Designer.cs" />
+    <Compile Remove="Migrations\20230320230852_fixingUser.cs" />
+    <Compile Remove="Migrations\20230320230852_fixingUser.Designer.cs" />
+    <Compile Remove="Migrations\20230320231115_fixing.cs" />
+    <Compile Remove="Migrations\20230320231115_fixing.Designer.cs" />
     <Compile Remove="Migrations\20230322000710_Employee.cs" />
     <Compile Remove="Migrations\20230322000710_Employee.Designer.cs" />
     <Compile Remove="Migrations\20230322000943_Employee.cs" />
@@ -25,6 +29,16 @@
     <Compile Remove="Migrations\20230322002821_DeleteEmployees-IgnoreChanges.Designer.cs" />
     <Compile Remove="Migrations\20230322002902_DeleteEmployees.cs" />
     <Compile Remove="Migrations\20230322002902_DeleteEmployees.Designer.cs" />
+    <Compile Remove="Migrations\20230322003854_EmployeesModelRelationship.cs" />
+    <Compile Remove="Migrations\20230322003854_EmployeesModelRelationship.Designer.cs" />
+    <Compile Remove="Migrations\20230322204916_EmploeeUpdated.cs" />
+    <Compile Remove="Migrations\20230322204916_EmploeeUpdated.Designer.cs" />
+    <Compile Remove="Migrations\20230322205118_EmploeeUpdatedAgain.cs" />
+    <Compile Remove="Migrations\20230322205118_EmploeeUpdatedAgain.Designer.cs" />
+    <Compile Remove="Migrations\20230329185113_PropertyTypeChanged.cs" />
+    <Compile Remove="Migrations\20230329185113_PropertyTypeChanged.Designer.cs" />
+    <Compile Remove="Migrations\20230329185519_PropertyTypeChanged.cs" />
+    <Compile Remove="Migrations\20230329185519_PropertyTypeChanged.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

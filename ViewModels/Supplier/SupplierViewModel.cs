@@ -1,4 +1,7 @@
-﻿using System;
+﻿using CapstoneGroupProject.Helpers;
+using CapstoneGroupProject.Models.Enums;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -34,7 +37,7 @@ namespace CapstoneGroupProject.ViewModels
 
         [Required(ErrorMessage = "Enter Zip Code")]
         [DisplayName("Zip Code")]
-        public int ZipCode { get; set; }
+        public string ZipCode { get; set; }
 
         [Required(ErrorMessage = "Enter a phone number")]
         [StringLength(14)]
@@ -47,5 +50,23 @@ namespace CapstoneGroupProject.ViewModels
         [DataType(DataType.EmailAddress)]
         [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "E-mail is not valid")]
         public string Email { get; set; }
+
+        public IEnumerable<SelectListItem> States
+        {
+            get
+            {
+                var options = new List<SelectListItem>();
+
+                foreach (States option in Enum.GetValues(typeof(States)))
+                {
+                    options.Add(new SelectListItem()
+                    {
+                        Text = AttributeExtentions.GetDescription(option),
+                        Value = option.ToString(),
+                    });
+                }
+                return options;
+            }
+        }
     }
 }

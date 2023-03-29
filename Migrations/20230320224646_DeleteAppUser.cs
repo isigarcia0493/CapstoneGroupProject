@@ -6,17 +6,17 @@ namespace CapstoneGroupProject.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Employees_AspNetUsers_ID",
-                table: "Employees");
+            //migrationBuilder.DropForeignKey(
+            //    name: "FK_Employees_AspNetUsers_ID",
+            //    table: "Employees");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_OrderDetails_Orders_OrderID",
                 table: "OrderDetails");
 
-            migrationBuilder.DropIndex(
-                name: "IX_Employees_ID",
-                table: "Employees");
+            //migrationBuilder.DropIndex(
+            //    name: "IX_Employees_ID",
+            //    table: "Employees");
 
             migrationBuilder.DropColumn(
                 name: "ID",
@@ -89,13 +89,13 @@ namespace CapstoneGroupProject.Migrations
                 table: "Employees",
                 column: "ID");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_Employees_AspNetUsers_ID",
-                table: "Employees",
-                column: "ID",
-                principalTable: "AspNetUsers",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+            //migrationBuilder.AddForeignKey(
+            //    name: "FK_Employees_AspNetUsers_ID",
+            //    table: "Employees",
+            //    column: "ID",
+            //    principalTable: "AspNetUsers",
+            //    principalColumn: "Id",
+            //    onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_OrderDetails_Orders_OrderID",

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CapstoneGroupProject.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230322003854_EmployeesModelRelationship")]
-    partial class EmployeesModelRelationship
+    [Migration("20230329191143_PropertyTypeChanged")]
+    partial class PropertyTypeChanged
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -132,6 +132,9 @@ namespace CapstoneGroupProject.Migrations
                     b.Property<decimal>("OrderPrice")
                         .HasColumnType("decimal(20,2)");
 
+                    b.Property<int?>("OrderViewModelOrderID")
+                        .HasColumnType("int");
+
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
@@ -141,6 +144,8 @@ namespace CapstoneGroupProject.Migrations
                     b.HasKey("OrderDetailID");
 
                     b.HasIndex("OrderId");
+
+                    b.HasIndex("OrderViewModelOrderID");
 
                     b.ToTable("OrderDetails");
                 });
@@ -241,12 +246,31 @@ namespace CapstoneGroupProject.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.Property<int>("ZipCode")
-                        .HasColumnType("int");
+                    b.Property<string>("ZipCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SupplierID");
 
                     b.ToTable("Suppliers");
+                });
+
+            modelBuilder.Entity("CapstoneGroupProject.ViewModels.Order.OrderViewModel", b =>
+                {
+                    b.Property<int>("OrderID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("OrderTotal")
+                        .HasColumnType("decimal(20,2)");
+
+                    b.HasKey("OrderID");
+
+                    b.ToTable("OrderViewModel");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -461,6 +485,10 @@ namespace CapstoneGroupProject.Migrations
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("CapstoneGroupProject.ViewModels.Order.OrderViewModel", null)
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("OrderViewModelOrderID");
                 });
 
             modelBuilder.Entity("CapstoneGroupProject.Models.Payment", b =>
