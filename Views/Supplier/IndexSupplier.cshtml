@@ -14,9 +14,6 @@
         <table class="table table-striped table-bordered">
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.SupplierID)
-                </th>
-                <th>
                     @Html.DisplayNameFor(model => model.SupplierName)
                 </th>
                 <th>
@@ -44,10 +41,6 @@
             @foreach (var item in Model)
             {
                 <tr>
-
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SupplierID)
-                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.SupplierName)
                     </td>

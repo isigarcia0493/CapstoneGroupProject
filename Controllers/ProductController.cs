@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CapstoneGroupProject.Controllers
 {
@@ -37,9 +38,30 @@ namespace CapstoneGroupProject.Controllers
         // GET: ProductController/Create
         public ActionResult CreateProduct()
         {
+            ViewBag.Categories = GetCategories();
+            ViewBag.Suppliers = GetSuppliers();
+
             return View();
         }
-        
+
+        public IEnumerable<SelectListItem> GetCategories()
+        {
+            return _appDbContext.Categories.Select(c => new SelectListItem()
+            {
+                Text = c.CategoryName,
+                Value = c.CategoryID.ToString(),
+            }).ToList();
+        }
+
+        public IEnumerable<SelectListItem> GetSuppliers()
+        {
+            return _appDbContext.Suppliers.Select(c => new SelectListItem()
+            {
+                Text = c.SupplierName,
+                Value = c.SupplierID.ToString(),
+            }).ToList();
+        }
+
         public ActionResult ListProducts()
         {
             var products = ToViewModel(_appDbContext.Products.ToList());
@@ -70,12 +92,17 @@ namespace CapstoneGroupProject.Controllers
 
                 //This shows it in a red message on the screen
                 ModelState.AddModelError(string.Empty, "Product was successfully added");
+                
+                return RedirectToAction("ListProducts");
             }
             else
             {
+                ViewBag.Categories = GetCategories();
+                ViewBag.Suppliers = GetSuppliers();
                 ModelState.AddModelError(string.Empty, "Couldn't add Product to database");
+                
+                return View(vmProduct);
             }
-            return View();
         }
 
         // GET: ProductController/Edit/5
@@ -86,6 +113,9 @@ namespace CapstoneGroupProject.Controllers
             {
                 var product = _appDbContext.Products.Find(id);
                 vmProduct = ModelToVM(product);
+                ViewBag.Categories = GetCategories();
+                ViewBag.Suppliers = GetSuppliers();
+
                 return View(vmProduct);
 
             }
@@ -101,36 +131,56 @@ namespace CapstoneGroupProject.Controllers
         public IActionResult EditProduct(int id, ProductViewModel vmProduct)
         {
             try
-            {
+            { 
                 var test = VMToModel(vmProduct);
                 _appDbContext.Entry(test).State = EntityState.Modified;
                 _appDbContext.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("ListProducts");
             }
             catch
             {
-                return View();
+                ViewBag.Categories = GetCategories();
+                ViewBag.Suppliers = GetSuppliers();
+
+                return View(vmProduct);
             }
         }
 
         // GET: ProductController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var product = _appDbContext.Products.Find(id);
+            
+            product.Category = _appDbContext.Categories.Find(product.CategoryID);
+            product.Supplier = _appDbContext.Suppliers.Find(product.SupplierID);
+
+            return View("DeleteProductView", product);
         }
 
         // POST: ProductController/Delete/5
-        [HttpDelete]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(Product model)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var product = _appDbContext.Products.Find(model.ProductID);
+
+                if(product != null)
+                {
+                    _appDbContext.Products.Remove(product);
+                    _appDbContext.SaveChanges();
+
+                    return RedirectToAction("ListProducts");
+                }
+                else
+                {
+                    return View(model);
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                throw new Exception(ex.Message);
             }
         }
 
