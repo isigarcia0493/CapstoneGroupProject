@@ -45,7 +45,6 @@ namespace CapstoneGroupProject.ViewModels.Employee
         [DisplayName("State")]
         public string State { get; set; }
 
-
         [Required(ErrorMessage = "Zip Code is required")]
         [StringLength(5)]
         [DisplayName("Zip Code")]
@@ -60,6 +59,11 @@ namespace CapstoneGroupProject.ViewModels.Employee
         public bool IsActive { get; set; }
 
         public IEnumerable<IOrderedQueryable> Orders { get; set; }
+
+        [DataType(DataType.EmailAddress)]
+        [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "E-mail is not valid")]
+        [DisplayName("Email")]
+        public string Email { get; set; }
 
         public IEnumerable<SelectListItem> States
         {
