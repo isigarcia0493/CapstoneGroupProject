@@ -60,5 +60,10 @@ namespace CapstoneGroupProject.Models
 
         public IEnumerable<Order> Orders { get; set; }
         public string UserID { get; set; }
+
+        [DataType(DataType.EmailAddress)]
+        [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "E-mail is not valid")]
+        [DisplayName("Email")]
+        public string Email { get; set; }
     }
 }
