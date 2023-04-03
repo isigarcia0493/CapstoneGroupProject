@@ -58,6 +58,7 @@ namespace CapstoneGroupProject.Models
         [DisplayName("Is employee active")]
         public bool IsActive { get; set; }
 
-        public IEnumerable<Order> Orders { get; set; } 
+        public IEnumerable<Order> Orders { get; set; }
+        public string UserID { get; set; }
     }
 }
