@@ -1,7 +1,7 @@
 ﻿@model CapstoneGroupProject.Models.Product
 
 @{
-    ViewData["Title"] = "DeleteProductView";
+    ViewData["Title"] = "Delete Product";
 }
 
 <div class="mainWrapper">
@@ -48,7 +48,7 @@
             </dd class>
         </dl>
         <div class="row justify-content-center mt-5">
-            <form asp-action="Delete">
+            <form asp-action="DeleteProduct">
                 <input type="hidden" asp-for="ProductID" />
                 <input type="submit" value="Delete" class="btn btn-danger" /> |
                 <a asp-action="ListProducts" class="btn btn-secondary">Back to List</a>

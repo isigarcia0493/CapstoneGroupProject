@@ -62,9 +62,15 @@ namespace CapstoneGroupProject.Controllers
             }).ToList();
         }
 
-        public ActionResult ListProducts()
+        public IActionResult ListProducts()
         {
             var products = ToViewModel(_appDbContext.Products.ToList());
+            foreach (var item in products)
+            {
+                item.Category = _appDbContext.Categories.Where(c => c.CategoryID == item.CategoryID).FirstOrDefault();
+                item.Supplier = _appDbContext.Suppliers.Where(s => s.SupplierID == item.SupplierID).FirstOrDefault();
+                item.TotalCost = Convert.ToDecimal(item.Quantity) * Convert.ToDecimal(item.UnitPrice);
+            }
             return View(products);
         }
 
@@ -147,7 +153,7 @@ namespace CapstoneGroupProject.Controllers
         }
 
         // GET: ProductController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult DeleteProduct(int id)
         {
             var product = _appDbContext.Products.Find(id);
             
@@ -160,7 +166,7 @@ namespace CapstoneGroupProject.Controllers
         // POST: ProductController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(Product model)
+        public ActionResult DeleteProduct(Product model)
         {
             try
             {
