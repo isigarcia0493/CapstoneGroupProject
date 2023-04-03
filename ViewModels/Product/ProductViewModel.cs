@@ -23,6 +23,7 @@ namespace CapstoneGroupProject.ViewModels
         [Display(Name = "Product Description")]
         public string Description { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:C2}")]
         [Required(ErrorMessage = "Enter a unit price")]
         [Range(0, 99.99)]
         [DisplayName("Unit Price")]
@@ -33,7 +34,7 @@ namespace CapstoneGroupProject.ViewModels
         [DisplayName("Quantity")]
         public int Quantity { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:C0}")]
+        [DisplayFormat(DataFormatString = "{0:C2}")]
         public decimal TotalCost { get; set; }
 
         //Relationships
