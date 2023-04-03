@@ -34,10 +34,12 @@ namespace CapstoneGroupProject.Models
 
 
         //Relationships
+        [DisplayName("Supplier")]
         public int SupplierID { get; set; }
         [ForeignKey("SupplierID")]
         public Supplier Supplier { get; set; }
 
+        [DisplayName("Category")]
         public int CategoryID { get; set; }
         [ForeignKey("CategoryID")]
         public Category Category { get; set; }

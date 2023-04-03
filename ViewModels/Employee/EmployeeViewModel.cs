@@ -8,47 +8,61 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CapstoneGroupProject.ViewModels
+namespace CapstoneGroupProject.ViewModels.Employee
 {
-    public class SupplierViewModel
+    public class EmployeeViewModel
     {
         [Key]
-        public int SupplierID { get; set; }
+        public int EmployeeID { get; set; }
 
-        [Required(ErrorMessage = "Enter a supplier name")]
-        [StringLength(100)]
-        [DisplayName("Supplier Name")]
-        public string SupplierName { get; set; }
+        [Required(ErrorMessage = "Enter a employee first name")]
+        [StringLength(50)]
+        [DisplayName("Name")]
+        public string FirstName { get; set; }
 
-        [Required(ErrorMessage = "Enter the supplier address")]
-        [StringLength(100)]
-        [DisplayName("Address")]
-        public string Address { get; set; }
+        [Required(ErrorMessage = "Enter a employee last name")]
+        [StringLength(50)]
+        [DisplayName("Last Name")]
+        public string LastName { get; set; }
 
-        [Required(ErrorMessage = "Enter city")]
-        [StringLength(100)]
-        [DisplayName("City")]
-        public string City { get; set; }
-
-        [Required(ErrorMessage = "Enter State")]
-        [StringLength(20)]
-        [DisplayName("State")]
-        public string State { get; set; }
-
-        [Required(ErrorMessage = "Enter Zip Code")]
-        [DisplayName("Zip Code")]
-        public string ZipCode { get; set; }
-
-        [Required(ErrorMessage = "Enter a phone number")]
+        [Required(ErrorMessage = "Phone number is required")]
         [StringLength(14)]
         [DisplayName("Phone Number")]
         public string PhoneNumber { get; set; }
 
-        [Required(ErrorMessage = "Enter an email")]
+        [Required(ErrorMessage = "Address is required")]
+        [StringLength(100)]
+        [DisplayName("Address")]
+        public string Address { get; set; }
+
+        [Required(ErrorMessage = "City is required")]
+        [StringLength(100)]
+        [DisplayName("City")]
+        public string City { get; set; }
+
+        [Required(ErrorMessage = "State is required")]
         [StringLength(50)]
-        [DisplayName("Email")]
+        [DisplayName("State")]
+        public string State { get; set; }
+
+        [Required(ErrorMessage = "Zip Code is required")]
+        [StringLength(5)]
+        [DisplayName("Zip Code")]
+        public string ZipCode { get; set; }
+
+        [Required(ErrorMessage = "Hire Date is required")]
+        [DisplayName("Hire Date")]
+        [DataType(DataType.Date)]
+        public DateTime HireDate { get; set; }
+
+        [DisplayName("Is employee active")]
+        public bool IsActive { get; set; }
+
+        public IEnumerable<IOrderedQueryable> Orders { get; set; }
+
         [DataType(DataType.EmailAddress)]
         [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "E-mail is not valid")]
+        [DisplayName("Email")]
         public string Email { get; set; }
 
         public IEnumerable<SelectListItem> States
@@ -70,3 +84,4 @@ namespace CapstoneGroupProject.ViewModels
         }
     }
 }
+

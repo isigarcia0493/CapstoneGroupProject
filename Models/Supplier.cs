@@ -34,7 +34,7 @@ namespace CapstoneGroupProject.Models
 
         [Required(ErrorMessage = "Enter Zip Code")]
         [DisplayName("Zip Code")]
-        public int ZipCode { get; set; }
+        public string ZipCode { get; set; }
 
         [Required(ErrorMessage = "Enter a phone number")]
         [StringLength(14)]

@@ -1,0 +1,41 @@
+﻿@model CapstoneGroupProject.Models.Category
+
+@{
+    ViewData["Title"] = "EditCategory";
+}
+
+<div class="mainWrapper">
+    <div class="header">
+        <h1>Edit Category Information</h1>
+    </div>
+    <div class="formInput">
+        <form asp-action="EditCategory">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CategoryID" />
+            <div class="row justify-content-center">
+                <div class="form-group col-md-6 mb-5">
+                    <label asp-for="CategoryName" class="control-label"></label>
+                    <input asp-for="CategoryName" class="form-control" />
+                    <span asp-validation-for="CategoryName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="form-group col-md-6">
+                    <label asp-for="CategoryDescription" class="control-label"></label>
+                    <textarea asp-for="CategoryDescription" class="form-control"></textarea>
+                    <span asp-validation-for="CategoryDescription" class="text-body"></span>
+                </div>
+            </div>
+            <div class="row justify-content-center mt-5">
+                <div class="form-group">
+                    <input type="submit" value="Edit" class="btn btn-primary" /> |
+                    <a asp-action="IndexCategory" class="btn btn-secondary">Back to List</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

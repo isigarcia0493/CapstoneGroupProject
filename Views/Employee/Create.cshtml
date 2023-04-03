@@ -1,4 +1,4 @@
-﻿@model Employee
+﻿@model EmployeeViewModel
 @using CapstoneGroupProject.Models.Enums
 
 @{
@@ -30,6 +30,11 @@
                     <input asp-for="PhoneNumber" class="form-control" />
                     <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                 </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
             </div>
             <div class="row">
                 <div class="form-group col-md-12">
@@ -46,7 +51,7 @@
                 </div>
                  <div class="form-group col-md-2">
                      <label asp-for="State" class="control-label"></label>
-                     @Html.DropDownListFor(model => model.State, Enum.GetValues(typeof(States)).Cast<States>().Select(x => new SelectListItem { Text = x.ToString(), Value = x.ToString() }), new { @class = "form-control custom-select mr-sm-2" })
+                     @Html.DropDownListFor(model => model.State, Model.States, "-- Select One --", new { @class = "form-control custom-select mr-sm-2" })
                      <span asp-validation-for="State" class="text-danger"></span>
                  </div>
                 <div class="form-group col-md-2">
@@ -56,18 +61,25 @@
                 </div>
                 <div class="form-group col-md-2">
                     <label asp-for="HireDate" class="control-label"></label>
-                    <input asp-for="HireDate" class="form-control" />
+                    @Html.TextBoxFor(model => model.HireDate, new { @class = "form-control", type = "date" })
                     <span asp-validation-for="HireDate" class="text-danger"></span>
                 </div>
             </div>
-            <div class="form-group form-check mt-3 mb-5">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
-                </label>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <div class="form-group form-check mt-3 mb-5">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.ActionLink("Create User", "Registration", "Account", "", new { @class = "btn btn-warning btn-lg", target="_blank" })
+                </div>
             </div>
             <div class="form-group offset-5">
                 <input type="submit" value="Create" class="btn btn-success" /> |
-                @Html.ActionLink("Employees List", "Index", "Employee", "", new{@class="btn btn-secondary"})
+                @Html.ActionLink("Employees List", "Index", "Employee", "", new { @class = "btn btn-secondary" })
             </div>
         </form>
     </div>    

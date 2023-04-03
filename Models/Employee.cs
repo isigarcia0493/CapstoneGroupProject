@@ -39,9 +39,6 @@ namespace CapstoneGroupProject.Models
         [DisplayName("City")]
         public string City { get; set; }
 
-        [NotMapped]
-        public States States { get; set; }
-
         [Required(ErrorMessage = "State is required")]
         [StringLength(50)]
         [DisplayName("State")]
@@ -61,6 +58,12 @@ namespace CapstoneGroupProject.Models
         [DisplayName("Is employee active")]
         public bool IsActive { get; set; }
 
-        public IEnumerable<Order> Orders { get; set; } 
+        public IEnumerable<Order> Orders { get; set; }
+        public string UserID { get; set; }
+
+        [DataType(DataType.EmailAddress)]
+        [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "E-mail is not valid")]
+        [DisplayName("Email")]
+        public string Email { get; set; }
     }
 }

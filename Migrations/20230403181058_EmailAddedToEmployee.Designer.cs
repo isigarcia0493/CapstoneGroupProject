@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CapstoneGroupProject.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230322204916_EmploeeUpdated")]
-    partial class EmploeeUpdated
+    [Migration("20230403181058_EmailAddedToEmployee")]
+    partial class EmailAddedToEmployee
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -60,6 +60,9 @@ namespace CapstoneGroupProject.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")
@@ -81,9 +84,13 @@ namespace CapstoneGroupProject.Migrations
                         .HasColumnType("nvarchar(14)")
                         .HasMaxLength(14);
 
-                    b.Property<int>("State")
-                        .HasColumnType("int")
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
+
+                    b.Property<string>("UserID")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ZipCode")
                         .IsRequired()
@@ -245,8 +252,9 @@ namespace CapstoneGroupProject.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.Property<int>("ZipCode")
-                        .HasColumnType("int");
+                    b.Property<string>("ZipCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SupplierID");
 

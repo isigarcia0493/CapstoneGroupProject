@@ -43,7 +43,9 @@ namespace CapstoneGroupProject.Controllers
         // GET: SupplierController/Create
         public IActionResult CreateSupplier()
         {
-            return View();
+            SupplierViewModel supplierVM = new SupplierViewModel();
+
+            return View(supplierVM);
         }
 
         // POST: SupplierController/Create
@@ -80,7 +82,19 @@ namespace CapstoneGroupProject.Controllers
             {
                 var supplier = _appDbContext.Suppliers.Find(id);
 
-                return View(supplier);
+                SupplierViewModel supplierVM = new SupplierViewModel()
+                {
+                    SupplierID = supplier.SupplierID,
+                    SupplierName = supplier.SupplierName,
+                    Address = supplier.Address,
+                    City = supplier.City,
+                    State = supplier.State,
+                    ZipCode = supplier.ZipCode,
+                    PhoneNumber = supplier.PhoneNumber,
+                    Email = supplier.Email
+                };
+
+                return View(supplierVM);
 
             }
             catch (Exception ex)

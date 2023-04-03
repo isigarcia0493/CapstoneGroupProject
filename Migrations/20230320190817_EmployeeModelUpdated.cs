@@ -6,9 +6,9 @@ namespace CapstoneGroupProject.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Employee_AspNetUsers_ID",
-                table: "Employee");
+            //    migrationBuilder.DropForeignKey(
+            //        name: "FK_Employee_AspNetUsers_ID",
+            //        table: "Employee");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Orders_Employee_EmployeeId",
@@ -51,9 +51,9 @@ namespace CapstoneGroupProject.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Employees_AspNetUsers_ID",
-                table: "Employees");
+            //migrationBuilder.DropForeignKey(
+            //    name: "FK_Employees_AspNetUsers_ID",
+            //    table: "Employees");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Orders_Employees_EmployeeId",
@@ -77,13 +77,13 @@ namespace CapstoneGroupProject.Migrations
                 table: "Employee",
                 column: "EmployeeID");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_Employee_AspNetUsers_ID",
-                table: "Employee",
-                column: "ID",
-                principalTable: "AspNetUsers",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+            //migrationBuilder.AddForeignKey(
+            //    name: "FK_Employee_AspNetUsers_ID",
+            //    table: "Employee",
+            //    column: "ID",
+            //    principalTable: "AspNetUsers",
+            //    principalColumn: "Id",
+            //    onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Orders_Employee_EmployeeId",

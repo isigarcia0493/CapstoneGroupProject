@@ -27,24 +27,24 @@ namespace CapstoneGroupProject.Migrations
                 table: "Employees",
                 column: "ID");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_Employees_AspNetUsers_ID",
-                table: "Employees",
-                column: "ID",
-                principalTable: "AspNetUsers",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+            //migrationBuilder.AddForeignKey(
+            //    name: "FK_Employees_AspNetUsers_ID",
+            //    table: "Employees",
+            //    column: "ID",
+            //    principalTable: "AspNetUsers",
+            //    principalColumn: "Id",
+            //    onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Employees_AspNetUsers_ID",
-                table: "Employees");
+            //migrationBuilder.DropForeignKey(
+            //    name: "FK_Employees_AspNetUsers_ID",
+            //    table: "Employees");
 
-            migrationBuilder.DropIndex(
-                name: "IX_Employees_ID",
-                table: "Employees");
+            //migrationBuilder.DropIndex(
+            //    name: "IX_Employees_ID",
+            //    table: "Employees");
 
             migrationBuilder.DropColumn(
                 name: "ID",

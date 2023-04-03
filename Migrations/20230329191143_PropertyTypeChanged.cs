@@ -3,23 +3,21 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CapstoneGroupProject.Migrations
 {
-    public partial class EmploeeUpdated : Migration
+    public partial class PropertyTypeChanged : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterColumn<string>(
+                name: "ZipCode",
+                table: "Suppliers",
+                nullable: false,
+                oldClrType: typeof(int),
+                oldType: "int");
+
             migrationBuilder.AddColumn<int>(
                 name: "OrderViewModelOrderID",
                 table: "OrderDetails",
                 nullable: true);
-
-            migrationBuilder.AlterColumn<int>(
-                name: "State",
-                table: "Employees",
-                maxLength: 50,
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(50)",
-                oldMaxLength: 50);
 
             migrationBuilder.CreateTable(
                 name: "OrderViewModel",
@@ -66,14 +64,12 @@ namespace CapstoneGroupProject.Migrations
                 name: "OrderViewModelOrderID",
                 table: "OrderDetails");
 
-            migrationBuilder.AlterColumn<string>(
-                name: "State",
-                table: "Employees",
-                type: "nvarchar(50)",
-                maxLength: 50,
+            migrationBuilder.AlterColumn<int>(
+                name: "ZipCode",
+                table: "Suppliers",
+                type: "int",
                 nullable: false,
-                oldClrType: typeof(int),
-                oldMaxLength: 50);
+                oldClrType: typeof(string));
         }
     }
 }

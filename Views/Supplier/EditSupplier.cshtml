@@ -1,54 +1,64 @@
-﻿@model CapstoneGroupProject.Models.Supplier
+﻿@model SupplierViewModel
 
 @{
     ViewData["Title"] = "EditSupplier";
 }
 
-<h4>Edit Supplier Information</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+
+<div class="mainWrapper">
+    <div class="tableList">
+        <div class="header mb-5">
+            <h1>Edit Supplier Information</h1>
+        </div>
         <form asp-action="EditSupplier">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="SupplierID" />
-            <div class="form-group">
-                <label asp-for="SupplierName" class="control-label"></label>
-                <input asp-for="SupplierName" class="form-control" />
-                <span asp-validation-for="SupplierName" class="text-danger"></span>
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label asp-for="SupplierName" class="control-label"></label>
+                    <input asp-for="SupplierName" class="form-control" />
+                    <span asp-validation-for="SupplierName" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Address" class="control-label"></label>
-                <input asp-for="Address" class="form-control" />
-                <span asp-validation-for="Address" class="text-danger"></span>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label asp-for="Address" class="control-label"></label>
+                    <input asp-for="Address" class="form-control" />
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="City" class="control-label"></label>
+                    <input asp-for="City" class="form-control" />
+                    <span asp-validation-for="City" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-2">
+                    <label asp-for="State" class="control-label"></label>
+                    @Html.DropDownListFor(model => model.State, Model.States, "-- Select One --", new { @class = "form-control custom-select mr-sm-2" })
+                    <span asp-validation-for="State" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="City" class="control-label"></label>
-                <input asp-for="City" class="form-control" />
-                <span asp-validation-for="City" class="text-danger"></span>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label asp-for="ZipCode" class="control-label"></label>
+                    <input asp-for="ZipCode" class="form-control" />
+                    <span asp-validation-for="ZipCode" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="PhoneNumber" class="control-label"></label>
+                    <input asp-for="PhoneNumber" class="form-control" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="State" class="control-label"></label>
-                <input asp-for="State" class="form-control" />
-                <span asp-validation-for="State" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ZipCode" class="control-label"></label>
-                <input asp-for="ZipCode" class="form-control" />
-                <span asp-validation-for="ZipCode" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PhoneNumber" class="control-label"></label>
-                <input asp-for="PhoneNumber" class="form-control" />
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Edit Supplier Information" class="btn btn-primary" /> |
-                <a asp-action="IndexSupplier">Back to List</a>
+            <div class="row justify-content-center mt-5">
+                <div class="form-group">
+                    <input type="submit" value="Edit" class="btn btn-primary" /> |
+                    <a asp-action="IndexSupplier" class="btn btn-secondary">Back to List</a>
+                </div>
             </div>
         </form>
     </div>
