@@ -43,6 +43,11 @@ namespace CapstoneGroupProject.Controllers
         public ActionResult ListProducts()
         {
             var products = ToViewModel(_appDbContext.Products.ToList());
+            foreach (ProductViewModel product in products)
+            {
+                product.Supplier = _appDbContext.Suppliers.Find(product.SupplierID);
+                product.Category = _appDbContext.Categories.Find(product.CategoryID);
+            }
             return View(products);
         }
 
@@ -105,7 +110,7 @@ namespace CapstoneGroupProject.Controllers
                 var test = VMToModel(vmProduct);
                 _appDbContext.Entry(test).State = EntityState.Modified;
                 _appDbContext.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("CreateProduct");
             }
             catch
             {
