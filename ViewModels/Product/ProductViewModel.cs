@@ -33,6 +33,8 @@ namespace CapstoneGroupProject.ViewModels
         [DisplayName("Quantity")]
         public int Quantity { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:C0}")]
+        public decimal TotalCost { get; set; }
 
         //Relationships
         public int SupplierID { get; set; }
