@@ -1,9 +1,57 @@
-﻿@{
+﻿@model List<ProductViewModel>
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<link href="~/css/site.css" rel="stylesheet" />
+@*<link href="~/css/site.css" rel="stylesheet" />*@
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to Half Baked Cakes</h1>
-</div>
+
+    <div class="text-center">
+        <h1 class="display-4">Welcome to Half Baked Cakes</h1>
+    </div>
+    <div class="mainWrapper">
+        <div class="tableList">
+            <div class="header">
+                <h1>Create an Order</h1>
+            </div>
+            <form>
+                <table class="table table-striped">
+                    <tr>
+                        <th>Select Item</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        string name = item.ProductName.Replace(" ", "");
+                        
+                        <tr>
+                            <td>
+                                @*
+                                 I need a function to add the checked boxes
+                                    to a list of products that can be sent to the
+                                    controller for creating an order and also 
+                                    to enable the quantity text box
+                                
+                                    *@
+                                @Html.CheckBox(name + "-Chk", false)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ProductName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UnitPrice)
+                            </td>
+                            <td>
+                                <input id="@name-Text" type="text" value="" disabled  />
+                            </td>
+                        </tr>
+                    }
+                </table>
+                <input id="SubmitOrder" asp-controller="Order" asp-action="CreateOrder" type="submit" value="Create Order"  />
+            </form>
+            
+        </div>
+    </div>
+
