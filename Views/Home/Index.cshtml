@@ -35,7 +35,7 @@
                                     to enable the quantity text box
                                 
                                     *@
-                                @Html.CheckBox(name + "-Chk", false)
+                                @Html.CheckBoxFor(modelItem => item.IsChecked)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.ProductName)
@@ -44,7 +44,7 @@
                                 @Html.DisplayFor(modelItem => item.UnitPrice)
                             </td>
                             <td>
-                                <input id="@name-Text" type="text" value="" disabled  />
+                                @Html.TextBoxFor(modelItem => item.OrderQuantity)
                             </td>
                         </tr>
                     }

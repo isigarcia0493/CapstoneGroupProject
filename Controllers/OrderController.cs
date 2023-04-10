@@ -1,7 +1,9 @@
 ﻿using CapstoneGroupProject.Data;
 using CapstoneGroupProject.Models;
+using CapstoneGroupProject.ViewModels;
 using CapstoneGroupProject.ViewModels.Order;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -14,11 +16,15 @@ namespace CapstoneGroupProject.Controllers
     {
         //inject DB
         private readonly AppDbContext _appDbContext;
+        private readonly UserManager<IdentityUser> _userManager;
+
+        
 
         //new constructor for DB
-        public OrderController(AppDbContext appDbContext)
+        public OrderController(AppDbContext appDbContext, UserManager<IdentityUser> userManager)
         {
             _appDbContext = appDbContext;
+            _userManager = userManager;
         }
 
         // GET: OrderController
@@ -60,21 +66,39 @@ namespace CapstoneGroupProject.Controllers
         // POST: OrderController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateOrder(OrderViewModel vmOrder)
+        public IActionResult CreateOrder(List<ProductViewModel> products)
         {
+            List<ProductViewModel> selectedProducts = new List<ProductViewModel>();
+            decimal orderTotal = 0;
+            foreach (ProductViewModel product in products)
+            {
+                
+                if (product.IsChecked)
+                {
+                    selectedProducts.Add(product);
+                }
+            }
+            foreach(ProductViewModel product in selectedProducts)
+            {
+                orderTotal += (product.UnitPrice * product.OrderQuantity); 
+            }
             if (ModelState.IsValid)
             {
+                
+                /*var user = _userManager.Users.Where(ue => ue.Email == model.Email).FirstOrDefault();*/
+
+
                 Order order = new Order
                 {
-                    OrderID = vmOrder.OrderID,
-                    OrderDate = vmOrder.OrderDate,
-                    OrderTotal = vmOrder.OrderTotal,
-                    OrderDetails = vmOrder.OrderDetails,
+
+                    OrderDate = DateTime.Now,
+                    OrderTotal = orderTotal,
+                    OrderProducts = selectedProducts,
+
                 };
 
                 //How it goes to DB                
-                await _appDbContext.AddAsync(order);
-                await _appDbContext.SaveChangesAsync();
+                
 
                 //This shows it in a red message on the screen
                 ModelState.AddModelError(string.Empty, "Order was successfully added");
@@ -83,6 +107,22 @@ namespace CapstoneGroupProject.Controllers
             {
                 ModelState.AddModelError(string.Empty, "Couldn't add order to database");
             }
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SubmitOrder(Order order)
+        {
+            if (ModelState.IsValid)
+            {
+                await _appDbContext.AddAsync(order);
+                await _appDbContext.SaveChangesAsync();
+                ModelState.AddModelError(string.Empty, "Order was successfully added");
+            } else
+            {
+                ModelState.AddModelError(string.Empty, "Couldn't add order to database");
+            }
+
             return View();
         }
         // GET: OrderController/Edit/5
@@ -134,7 +174,7 @@ namespace CapstoneGroupProject.Controllers
                 OrderID = order.OrderID,
                 OrderDate = order.OrderDate,
                 OrderTotal = order.OrderTotal,
-                OrderDetails = order.OrderDetails
+                OrderProducts = order.OrderProducts
             };
             return orderVM;
         }
@@ -146,7 +186,7 @@ namespace CapstoneGroupProject.Controllers
                 OrderID = orderVM.OrderID,
                 OrderDate = orderVM.OrderDate,
                 OrderTotal = orderVM.OrderTotal,
-                OrderDetails = orderVM.OrderDetails
+                OrderProducts = orderVM.OrderProducts
             };
             return order;
         }
