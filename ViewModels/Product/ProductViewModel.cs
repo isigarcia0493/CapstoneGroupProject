@@ -45,6 +45,8 @@ namespace CapstoneGroupProject.ViewModels
         public int CategoryID { get; set; }
         [ForeignKey("CategoryID")]
         public Category Category { get; set; }
+        public bool IsChecked { get; set; }
+        public int OrderQuantity { get; set; }
     }
 }
 

@@ -24,6 +24,6 @@ namespace CapstoneGroupProject.ViewModels.Order
         [Column(TypeName = "decimal(20,2)")]
         public decimal OrderTotal { get; set; }
 
-        public IEnumerable<OrderDetails> OrderDetails { get; set; }
+        public List<ProductViewModel> OrderProducts { get; set; }
     }
 }

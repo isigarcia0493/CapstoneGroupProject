@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CapstoneGroupProject.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -27,6 +28,6 @@ namespace CapstoneGroupProject.Models
         [ForeignKey("EmployeeId")]
         public Employee Employee { get; set; }
 
-        public IEnumerable<OrderDetails> OrderDetails { get; set; }
+        public List<ProductViewModel> OrderProducts { get; set; }
     }
 }

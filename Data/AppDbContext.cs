@@ -28,7 +28,6 @@ namespace CapstoneGroupProject.Data
             base.OnModelCreating(builder);
 
             builder.Entity<Product>().HasOne(p => p.Category).WithMany(c => c.Product).IsRequired();
-            builder.Entity<OrderDetails>().HasOne(od => od.Order).WithMany(o => o.OrderDetails).IsRequired();
             builder.Entity<Order>().HasOne(e => e.Employee).WithMany(e => e.Orders).IsRequired();
         }
 
