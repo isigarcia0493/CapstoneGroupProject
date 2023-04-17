@@ -30,6 +30,8 @@ namespace CapstoneGroupProject.Models
         [Column(TypeName = "decimal(20,2)")]
         public decimal Total { get; set; }
 
+        public int ProductId { get; set; }
+
         //Relationships
         public int OrderId { get; set; }
         [ForeignKey("OrderId")]

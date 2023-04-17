@@ -39,6 +39,12 @@
     <Compile Remove="Migrations\20230329185113_PropertyTypeChanged.Designer.cs" />
     <Compile Remove="Migrations\20230329185519_PropertyTypeChanged.cs" />
     <Compile Remove="Migrations\20230329185519_PropertyTypeChanged.Designer.cs" />
+    <Compile Remove="Migrations\20230412235424_OrderLisTable.cs" />
+    <Compile Remove="Migrations\20230412235424_OrderLisTable.Designer.cs" />
+    <Compile Remove="Migrations\20230414001351_ProductIdAddedToOD.cs" />
+    <Compile Remove="Migrations\20230414001351_ProductIdAddedToOD.Designer.cs" />
+    <Compile Remove="Migrations\20230414001757_ProductIdAddedToOD.cs" />
+    <Compile Remove="Migrations\20230414001757_ProductIdAddedToOD.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,8 +1,10 @@
 ﻿using CapstoneGroupProject.Data;
 using CapstoneGroupProject.Models;
 using CapstoneGroupProject.ViewModels;
+using CapstoneGroupProject.ViewModels.Order;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -24,8 +26,28 @@ namespace CapstoneGroupProject.Controllers
 
         public IActionResult Index()
         {
-            var productList = ToViewModel(_appDbContext.Products.ToList());
-            return View(productList);
+            var products = _appDbContext.Products.ToList();
+            var orderLists = _appDbContext.OrderLists.ToList();
+            decimal subtotal = 0;
+            double TAX = 0.0725;
+
+            ProductListViewModel productListVM = new ProductListViewModel()
+            {
+                Products = products,
+                OrderLists = orderLists
+            };
+
+            foreach(var item in productListVM.OrderLists)
+            {
+                subtotal += item.Total;
+            }
+
+            ViewBag.Subtotal = subtotal.ToString("c");
+            ViewBag.Tax = "7.25 %";
+            ViewBag.TaxAmount = (subtotal * (decimal)TAX).ToString("c");
+            productListVM.GrandTotal = ((subtotal * (decimal)TAX) + subtotal);
+
+            return View(productListVM);
         }
 
         public IActionResult Privacy()

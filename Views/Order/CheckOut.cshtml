@@ -1,0 +1,39 @@
+﻿@model Order
+
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+<div class="mainWrapper">
+    <div class="tableList">
+        <div class="header mb-5">
+            <h1>Finish Payment</h1>
+        </div>
+
+        <form asp-action="CheckOut" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.OrderDate)
+                    @Html.EditorFor(model => model.OrderDate, new { htmlAttributes = new { @class = "form-control", @value=Model.OrderDate, @readonly="readonly" } })
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.OrderTotal)
+                    @Html.EditorFor(model => model.OrderTotal, new { htmlAttributes = new { @class = "form-control", @value=Model.OrderTotal, @readonly="readonly" } })
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="form-group offset-5">
+                    <input type="submit" value="Make Payment" class="btn btn-primary" /> |
+                    <a asp-action="Index" asp-controller="Home" class="btn btn-secondary">Back to List</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
