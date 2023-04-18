@@ -16,15 +16,15 @@ namespace CapstoneGroupProject.Controllers
     {
         //inject DB
         private readonly AppDbContext _appDbContext;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
-        
+
 
         //new constructor for DB
-        public OrderController(AppDbContext appDbContext, UserManager<IdentityUser> userManager)
+        public OrderController(AppDbContext appDbContext, SignInManager<IdentityUser> signInManager)
         {
             _appDbContext = appDbContext;
-            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         // GET: OrderController
@@ -167,6 +167,169 @@ namespace CapstoneGroupProject.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult AddToList(int id)
+        {
+            var product = _appDbContext.Products.Find(id);
+
+            if (product != null)
+            {
+     
+                ProductListViewModel productListVM = new ProductListViewModel()
+                {
+                    ProductId = product.ProductID,
+                    ProductName = product.ProductName,
+                    Price = product.UnitPrice,
+                };
+
+                return View(productListVM);
+
+            }
+            else
+            {
+                return RedirectToAction("Error", "Home");
+            }
+
+
+        }
+
+        [HttpPost]
+        public IActionResult AddToList(ProductListViewModel model)
+        {
+            if(model.Quantity == 0)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+            OrderList orderList = new OrderList
+                {
+                    ProductId = model.ProductId,
+                    ProductName = model.ProductName,
+                    Price = model.Price,
+                    Quantity = model.Quantity,
+                    Total = (model.Quantity * model.Price)
+                };
+
+                _appDbContext.OrderLists.Add(orderList);
+                _appDbContext.SaveChanges();
+
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        public IActionResult DeleteProduct(int id) 
+        {
+            var product = _appDbContext.OrderLists.Find(id);
+
+            if(product != null)
+            {
+                _appDbContext.OrderLists.Remove(product);
+                _appDbContext.SaveChanges();
+
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return RedirectToAction("Error", "Home");
+            }
+        }
+
+        [HttpGet]
+        public IActionResult CheckOut(decimal total)
+        {
+            Order order = new Order();
+            Payment payment = new Payment();
+
+            PaymentViewModel paymentVM = new PaymentViewModel(order, payment);
+
+            paymentVM.Order.OrderDate = DateTime.Now;
+            paymentVM.Order.OrderTotal = total;
+
+            return View(paymentVM);
+        }
+
+        [HttpPost]
+        public IActionResult CheckOut(PaymentViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if(_signInManager.IsSignedIn(User))
+                {
+                    var employee = _appDbContext.Employees.Where(en => en.Email == User.Identity.Name).SingleOrDefault();
+
+                    Order order = new Order()
+                    {
+                        OrderDate = model.Order.OrderDate,
+                        OrderTotal = model.Order.OrderTotal,
+                        Employee = employee,
+                        EmployeeId = employee.EmployeeID,                        
+                    };
+                    _appDbContext.Orders.Add(order);
+                    _appDbContext.SaveChanges();
+
+                    Payment payment = new Payment()
+                    {
+                        PaymentType = model.Payment.PaymentType,
+                        CashTotal = model.Order.OrderTotal,
+                        NameIntheCard = model.Payment.NameIntheCard,
+                        CardNumber = model.Payment.CardNumber,
+                        ExpitarionDate = model.Payment.ExpitarionDate,
+                        SecurityCode = model.Payment.SecurityCode,
+                        OrderID = order.OrderID,
+                        Order = _appDbContext.Orders.Find(model.Order.OrderID)
+                    };
+
+                    _appDbContext.Payments.Add(payment);
+                    _appDbContext.SaveChanges();
+
+                    var products = _appDbContext.OrderLists.ToList();
+
+                    if(products != null)
+                    {
+                        foreach(var product in products)
+                        {
+                            try
+                            {
+                                OrderDetails orderDetails = new OrderDetails();
+
+                                orderDetails.OrderPrice = product.Price;
+                                orderDetails.Quantity = product.Quantity;
+                                orderDetails.Total = product.Total;
+                                orderDetails.OrderId = order.OrderID;
+                                orderDetails.ProductId = product.ProductId;
+
+                                _appDbContext.OrderDetails.Add(orderDetails);
+                                _appDbContext.SaveChanges();
+
+                                _appDbContext.Remove(product);
+                                _appDbContext.SaveChanges();
+                            
+                            }catch(Exception ex)
+                            {
+                                throw new Exception(ex.Message);
+                            }
+                        }
+
+                        return RedirectToAction("Index", "Home");
+
+                    }
+                    else
+                    {
+                        return RedirectToAction("Error", "Home");
+                    }
+                }
+
+
+
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Error", "Home");
+            }
+        }
+
         private OrderViewModel OrderToOrderVM(Order order)
         {
             OrderViewModel orderVM = new OrderViewModel
@@ -190,5 +353,7 @@ namespace CapstoneGroupProject.Controllers
             };
             return order;
         }
+
+
     }
 }

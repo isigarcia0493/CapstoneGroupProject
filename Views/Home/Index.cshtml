@@ -1,57 +1,104 @@
-﻿@model List<ProductViewModel>
+﻿@model ProductListViewModel
+
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Sales Page";
 }
 
-@*<link href="~/css/site.css" rel="stylesheet" />*@
-
-
-    <div class="text-center">
-        <h1 class="display-4">Welcome to Half Baked Cakes</h1>
-    </div>
-    <div class="mainWrapper">
-        <div class="tableList">
-            <div class="header">
-                <h1>Create an Order</h1>
-            </div>
-            <form>
-                <table class="table table-striped">
-                    <tr>
-                        <th>Select Item</th>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                    </tr>
-                    @foreach (var item in Model)
-                    {
-                        string name = item.ProductName.Replace(" ", "");
-                        
-                        <tr>
-                            <td>
-                                @*
-                                 I need a function to add the checked boxes
-                                    to a list of products that can be sent to the
-                                    controller for creating an order and also 
-                                    to enable the quantity text box
-                                
-                                    *@
-                                @Html.CheckBoxFor(modelItem => item.IsChecked)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ProductName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.UnitPrice)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => item.OrderQuantity)
-                            </td>
-                        </tr>
-                    }
-                </table>
-                <input id="SubmitOrder" asp-controller="Order" asp-action="CreateOrder" type="submit" value="Create Order"  />
-            </form>
-            
+<div class="salesScreen">
+    <div class="products">
+        <div class="row g-0">
+            @foreach (var product in Model.Products)
+            {
+                <div class="col-lg-4 col-sm-6">
+                    <div class="card" style="width: 19rem;">
+                        @*<img src="@("~/Images/" + item.ImageUpload)" asp-append-version="true" class="card-img-top" alt=@item.Title width="200" height="350">*@
+                        <div class="card-body" style="text-align: center">
+                            <h5 class="card-title">@product.ProductName</h5>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><b>Price: </b>@product.UnitPrice.ToString("c2")</li>
+                        </ul>
+                        <div class="card-body" style="text-align: right">
+                            @Html.ActionLink("Add to List", "AddToList", "Order", new { id = @product.ProductID}, new { @class= "btn btn-success" })
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     </div>
-
+    <div class="listOfProducts">      
+        <div class="tableList">
+            <div class="header">
+                <h1>Products Selected</h1>
+            </div>
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th>
+                        Produc Name
+                    </th>
+                    <th>
+                        Price
+                    </th>
+                    <th>
+                        Quantity
+                    </th>
+                    <th>
+                        Total
+                    </th> 
+                    <th>
+                        Actions
+                    </th>
+                </tr>
+                @foreach (var item in Model.OrderLists)
+                {
+                    <tr>
+                        <td>
+                            @item.ProductName
+                        </td>
+                        <td>
+                            @item.Price
+                        </td>
+                        <td>
+                            @item.Quantity
+                        </td>
+                        <td>
+                            @item.Total
+                        </td> 
+                        <td>
+                            @Html.ActionLink("Delete Item", "DeleteProduct", "Order", new { id=item.ID }, new{ @class="btn btn-danger" })
+                        </td>
+                    </tr>
+                }
+            </table>
+            <div class="grandTotalBox">
+                <dl class="row">
+                    <dt class="col-sm-8">
+                        Subtotal:
+                    </dt>
+                    <dd class="col-sm-4">
+                        @ViewBag.Subtotal
+                    </dd>
+                    <dt class="col-sm-8">
+                        Tax:
+                    </dt>
+                    <dd class="col-sm-4">
+                        @ViewBag.Tax
+                    </dd>
+                    <dt class="col-sm-8">
+                        Tax Amount:
+                    </dt>
+                    <dd class="col-sm-4">
+                        @ViewBag.TaxAmount
+                    </dd>
+                    <dt class="col-sm-8">
+                        Total:
+                    </dt>
+                    <dd class="col-sm-4">
+                        @Model.GrandTotal.ToString("c")
+                    </dd>
+                </dl>
+                @Html.ActionLink("CheckOut", "CheckOut", "Order", new { total = Model.GrandTotal}, new { @class="btn btn-success"})
+            </div>
+        </div>
+    </div>
+</div>
