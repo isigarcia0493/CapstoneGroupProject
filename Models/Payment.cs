@@ -18,6 +18,26 @@ namespace CapstoneGroupProject.Models
         [DisplayName("Payment Type")]
         public string PaymentType { get; set; }
 
+        [DisplayName("Cash Paid")]
+        [Column(TypeName = "decimal(20,2)")]
+        public decimal CashTotal { get; set; }
+
+        [StringLength(100)]
+        [DisplayName("Name in Card")]
+        public string NameIntheCard { get; set; }
+
+        [StringLength(20)]
+        [DisplayName("Card Number")]
+        public string CardNumber { get; set; }
+
+        [StringLength(5)]
+        [DisplayName("Expiration Date")]
+        public string ExpitarionDate { get; set; }
+
+        [StringLength(3)]
+        [DisplayName("Security Code")]
+        public string SecurityCode { get; set; }
+
         //Relationships
         public int OrderID { get; set; }
         [ForeignKey("OrderID")]

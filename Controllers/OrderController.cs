@@ -5,7 +5,6 @@ using CapstoneGroupProject.ViewModels.Order;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -239,17 +238,19 @@ namespace CapstoneGroupProject.Controllers
         [HttpGet]
         public IActionResult CheckOut(decimal total)
         {
-            Order order = new Order()
-            {
-                OrderDate = DateTime.Now,
-                OrderTotal = total
-            };
-            
-            return View(order);
+            Order order = new Order();
+            Payment payment = new Payment();
+
+            PaymentViewModel paymentVM = new PaymentViewModel(order, payment);
+
+            paymentVM.Order.OrderDate = DateTime.Now;
+            paymentVM.Order.OrderTotal = total;
+
+            return View(paymentVM);
         }
 
         [HttpPost]
-        public IActionResult CheckOut(Order model)
+        public IActionResult CheckOut(PaymentViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -259,15 +260,29 @@ namespace CapstoneGroupProject.Controllers
 
                     Order order = new Order()
                     {
-                        OrderDate = model.OrderDate,
-                        OrderTotal = model.OrderTotal,
+                        OrderDate = model.Order.OrderDate,
+                        OrderTotal = model.Order.OrderTotal,
                         Employee = employee,
-                        EmployeeId = employee.EmployeeID
+                        EmployeeId = employee.EmployeeID,                        
                     };
-
                     _appDbContext.Orders.Add(order);
                     _appDbContext.SaveChanges();
-                    
+
+                    Payment payment = new Payment()
+                    {
+                        PaymentType = model.Payment.PaymentType,
+                        CashTotal = model.Order.OrderTotal,
+                        NameIntheCard = model.Payment.NameIntheCard,
+                        CardNumber = model.Payment.CardNumber,
+                        ExpitarionDate = model.Payment.ExpitarionDate,
+                        SecurityCode = model.Payment.SecurityCode,
+                        OrderID = order.OrderID,
+                        Order = _appDbContext.Orders.Find(model.Order.OrderID)
+                    };
+
+                    _appDbContext.Payments.Add(payment);
+                    _appDbContext.SaveChanges();
+
                     var products = _appDbContext.OrderLists.ToList();
 
                     if(products != null)

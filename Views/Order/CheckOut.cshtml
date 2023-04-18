@@ -1,4 +1,4 @@
-﻿@model Order
+﻿@model PaymentViewModel
 
 @{
     ViewData["Title"] = "Checkout";
@@ -14,14 +14,60 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="row">
                 <div class="form-group col-md-6">
-                    @Html.LabelFor(model => model.OrderDate)
-                    @Html.EditorFor(model => model.OrderDate, new { htmlAttributes = new { @class = "form-control", @value=Model.OrderDate, @readonly="readonly" } })
+                    @Html.LabelFor(model => model.Order.OrderDate)
+                    @Html.EditorFor(model => model.Order.OrderDate, new { htmlAttributes = new { @class = "form-control", @value=Model.Order.OrderDate, @readonly="readonly" } })
                 </div>
                 <div class="form-group col-md-6">
-                    @Html.LabelFor(model => model.OrderTotal)
-                    @Html.EditorFor(model => model.OrderTotal, new { htmlAttributes = new { @class = "form-control", @value=Model.OrderTotal, @readonly="readonly" } })
+                    @Html.LabelFor(model => model.Order.OrderTotal)
+                    @Html.EditorFor(model => model.Order.OrderTotal, new { htmlAttributes = new { @class = "form-control", @value=Model.Order.OrderTotal, @readonly="readonly" } })
                 </div>
             </div>
+            <div class="row justify-content-center">
+                <div class="form-group col-md-2">
+                    @Html.LabelFor(model => model.Payment.PaymentType)
+                    @Html.DropDownListFor(model => model.Payment.PaymentType, Model.PaymentType, "-- Select One --", new { @class = "form-control custom-select mr-sm-2" })
+                </div>
+            </div>
+            <div>
+                <div class="row card p-2">
+                    <dl class="row">
+                        <dt class="col-sm-6" style="text-align: right;">
+                            <label for="Received">Received</label>
+                        </dt>
+                        <dd class="col-sm-2">
+                            <input type="number" name="received" id="received" class="form-control" min="0" onchange="calculation()" />
+                        </dd>
+                        <dt class="col-sm-6" style="text-align: right;">
+                            <label for="Change">Change</label>
+                        </dt>
+                        <dd class="col-sm-2" style="text-align: right;">
+                            <input type="number" name="cange" id="change" readonly class="form-control" />
+                        </dd>
+                    </dl>
+                </div>
+            </div>            
+            <div>
+                <div class="row pt-3 pb-3">
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(model => model.Payment.NameIntheCard)
+                        @Html.EditorFor(model => model.Payment.NameIntheCard, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(model => model.Payment.CardNumber)
+                        @Html.EditorFor(model => model.Payment.CardNumber, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="form-group col-md-2">
+                        @Html.LabelFor(model => model.Payment.ExpitarionDate)
+                        @Html.EditorFor(model => model.Payment.ExpitarionDate, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                    <div class="form-group col-md-2">
+                        @Html.LabelFor(model => model.Payment.SecurityCode)
+                        @Html.EditorFor(model => model.Payment.SecurityCode, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+            </div>            
             <div class="row mt-5">
                 <div class="form-group offset-5">
                     <input type="submit" value="Make Payment" class="btn btn-primary" /> |
@@ -37,3 +83,20 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+
+<script>
+    let received = document.getElementById('received');
+    let change = document.getElementById('change');
+    let orderTotal = document.getElementById('Order_OrderTotal').value;
+
+    change.value = "0.00";
+
+    function calculation(){
+        let changeCash = (received.value - orderTotal).toFixed("2");
+        change.value = changeCash;
+
+        if (change.value < 0){
+            alert("Please enter a greater amount!");
+        }
+    }
+</script>
