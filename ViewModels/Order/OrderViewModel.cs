@@ -22,8 +22,12 @@ namespace CapstoneGroupProject.ViewModels.Order
         [Range(0, 999.99)]
         [DisplayName("Order Total")]
         [Column(TypeName = "decimal(20,2)")]
+
         public decimal OrderTotal { get; set; }
 
+        [DisplayName("Ordered Items")]
         public List<ProductViewModel> OrderProducts { get; set; }
+
+        public string productDescriptions { get; set; }
     }
 }

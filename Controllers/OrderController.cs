@@ -46,10 +46,30 @@ namespace CapstoneGroupProject.Controllers
             {
                 var orders = _appDbContext.Orders.ToList();
                 List<OrderViewModel> ordersVM = new List<OrderViewModel>();
+                decimal grandTotal = 0;
+
                 foreach (Order order in orders)
                 {
-                    ordersVM.Add(OrderToOrderVM(order));
+                    var orderDetails = _appDbContext.OrderDetails.Where(od => od.OrderId == order.OrderID);
+                    string productDescription = "";
+                    int num = 0;
+                    foreach (var item in orderDetails)
+                    {
+                        var productDetails = _appDbContext.Products.Where(pd => pd.ProductID == item.ProductId).FirstOrDefault();
+                        if (num == 0)
+                        {
+                            productDescription += item.Quantity.ToString() + " " + productDetails.ProductName;
+                        }
+                        else
+                        {
+                            productDescription += ", " + item.Quantity.ToString() + " " + productDetails.ProductName;
+                        }
+                        num++;
+                    }
+                    grandTotal += order.OrderTotal;
+                    ordersVM.Add(OrderToOrderVM(order, productDescription));
                 }
+                ViewBag.GrandTotal = grandTotal.ToString("c2");
                 return View(ordersVM);
             }
             catch (Exception ex)
@@ -257,7 +277,6 @@ namespace CapstoneGroupProject.Controllers
                 if(_signInManager.IsSignedIn(User))
                 {
                     var employee = _appDbContext.Employees.Where(en => en.Email == User.Identity.Name).SingleOrDefault();
-
                     Order order = new Order()
                     {
                         OrderDate = model.Order.OrderDate,
@@ -330,14 +349,15 @@ namespace CapstoneGroupProject.Controllers
             }
         }
 
-        private OrderViewModel OrderToOrderVM(Order order)
+        private OrderViewModel OrderToOrderVM(Order order, string productDescription = "")
         {
             OrderViewModel orderVM = new OrderViewModel
             {
                 OrderID = order.OrderID,
                 OrderDate = order.OrderDate,
                 OrderTotal = order.OrderTotal,
-                OrderProducts = order.OrderProducts
+                OrderProducts = order.OrderProducts,
+                productDescriptions = productDescription
             };
             return orderVM;
         }
