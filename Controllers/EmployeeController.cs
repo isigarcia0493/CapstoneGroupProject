@@ -119,6 +119,7 @@ namespace CapstoneGroupProject.Controllers
                     FirstName = employee.FirstName,
                     LastName = employee.LastName,
                     PhoneNumber = employee.PhoneNumber,
+                    Email = employee.Email,
                     Address = employee.Address,
                     City = employee.City,
                     State = employee.State,
