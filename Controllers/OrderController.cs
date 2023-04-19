@@ -5,6 +5,7 @@ using CapstoneGroupProject.ViewModels.Order;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -317,6 +318,16 @@ namespace CapstoneGroupProject.Controllers
                                 orderDetails.Total = product.Total;
                                 orderDetails.OrderId = order.OrderID;
                                 orderDetails.ProductId = product.ProductId;
+
+                                var item = _appDbContext.Products.Find(product.ProductId);
+
+                                if(item != null)
+                                {
+                                    item.Quantity -= product.Quantity;
+                                }
+
+                                _appDbContext.Entry(item).State = EntityState.Modified;
+                                _appDbContext.SaveChanges();
 
                                 _appDbContext.OrderDetails.Add(orderDetails);
                                 _appDbContext.SaveChanges();

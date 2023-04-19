@@ -6,25 +6,20 @@
 
 <div class="salesScreen">
     <div class="products">
-        <div class="row g-0">
-            @foreach (var product in Model.Products)
-            {
-                <div class="col-lg-4 col-sm-6">
-                    <div class="card" style="width: 19rem;">
-                        @*<img src="@("~/Images/" + item.ImageUpload)" asp-append-version="true" class="card-img-top" alt=@item.Title width="200" height="350">*@
-                        <div class="card-body" style="text-align: center">
-                            <h5 class="card-title">@product.ProductName</h5>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><b>Price: </b>@product.UnitPrice.ToString("c2")</li>
-                        </ul>
-                        <div class="card-body" style="text-align: right">
-                            @Html.ActionLink("Add to List", "AddToList", "Order", new { id = @product.ProductID}, new { @class= "btn btn-success" })
-                        </div>
+        @foreach (var product in Model.Products)
+        {
+            <div class="itemCard">
+                <a asp-controller="Order" asp-action="AddToList" asp-route-id="@product.ProductID">
+                    <div class="itemCardTitle" style="text-align: center">
+                        <h5>@product.ProductName</h5>
                     </div>
-                </div>
-            }
-        </div>
+                    <hr>
+                    <div class="itemCardPrice" style="text-align: center">
+                        <b>Price: </b>@product.UnitPrice.ToString("c2")
+                    </div>
+                </a>
+            </div>
+        }     
     </div>
     <div class="listOfProducts">      
         <div class="tableList">

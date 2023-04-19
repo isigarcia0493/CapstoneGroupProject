@@ -102,6 +102,45 @@ body {
     background-color: white;
     padding: 1% 0% 1% 1%;
     box-shadow: 0px 0px 10px black;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 2%;
+}
+
+.products a {
+    text-decoration: none;
+    color: black;
+}
+
+hr{
+    margin: 0.5%;
+}
+
+.itemCard{
+    border: 1px solid black;
+    width: 25%;
+    height: 25%;
+}
+
+.itemCard:hover{
+    background-color: aquamarine;
+}
+
+.itemCardTitle{
+    padding: 2%;
+}
+
+.productsContainer {
+    padding: 2%;
+}
+
+#card{
+    display: none;
+}
+
+#cash{
+    display: none;
 }
 
 /* Add Box */

@@ -23,12 +23,12 @@
                 </div>
             </div>
             <div class="row justify-content-center">
-                <div class="form-group col-md-2">
+                <div class="form-group col-md-3">
                     @Html.LabelFor(model => model.Payment.PaymentType)
-                    @Html.DropDownListFor(model => model.Payment.PaymentType, Model.PaymentType, "-- Select One --", new { @class = "form-control custom-select mr-sm-2" })
+                    @Html.DropDownListFor(model => model.Payment.PaymentType, Model.PaymentType, "-- Select One --", new { @class = "form-control custom-select mr-sm-2", id="paymentType", onchange = "HideShow()" })
                 </div>
             </div>
-            <div>
+            <div id="cash">
                 <div class="row card p-2">
                     <dl class="row">
                         <dt class="col-sm-6" style="text-align: right;">
@@ -46,18 +46,16 @@
                     </dl>
                 </div>
             </div>            
-            <div>
+            <div id="card">
                 <div class="row pt-3 pb-3">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                         @Html.LabelFor(model => model.Payment.NameIntheCard)
                         @Html.EditorFor(model => model.Payment.NameIntheCard, new { htmlAttributes = new { @class = "form-control" } })
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                         @Html.LabelFor(model => model.Payment.CardNumber)
                         @Html.EditorFor(model => model.Payment.CardNumber, new { htmlAttributes = new { @class = "form-control" } })
                     </div>
-                </div>
-                <div class="row justify-content-center">
                     <div class="form-group col-md-2">
                         @Html.LabelFor(model => model.Payment.ExpitarionDate)
                         @Html.EditorFor(model => model.Payment.ExpitarionDate, new { htmlAttributes = new { @class = "form-control" } })
@@ -97,6 +95,23 @@
 
         if (change.value < 0){
             alert("Please enter a greater amount!");
+        }
+    }
+
+    function HideShow() {
+        let paymentType = document.getElementById('paymentType').value;
+        let cash = document.getElementById('cash');
+        let card = document.getElementById('card');
+
+        if (paymentType == "CASH") {
+            cash.style.display = 'block';
+            card.style.display = 'none';
+        } else if (paymentType == "CARD") {
+            card.style.display = 'block';
+            cash.style.display = 'none';
+        } else {
+            card.style.display = 'none';
+            cash.style.display = 'none';
         }
     }
 </script>
