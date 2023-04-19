@@ -19,6 +19,9 @@
                     @Html.DisplayNameFor(model => model.OrderDate)
                 </th>
                 <th>
+                    @Html.DisplayNameFor(model => model.EmployeeName)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.OrderProducts)
                 </th>
                 <th>
@@ -35,6 +38,9 @@
                         @Html.DisplayFor(modelItem => item.OrderDate)
                     </td>
                     <td>
+                        @Html.DisplayFor(modelItem => item.EmployeeName)
+                    </td>
+                    <td>
                         @Html.DisplayFor(modelItem => item.productDescriptions)
                     </td>
                     <td>
@@ -43,6 +49,7 @@
                 </tr>
             }
             <tr>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td style="text-align: right; font-weight: bold;">Grand Total:</td>

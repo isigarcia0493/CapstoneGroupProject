@@ -71,7 +71,7 @@ namespace CapstoneGroupProject.Controllers
                     ordersVM.Add(OrderToOrderVM(order, productDescription));
                 }
                 ViewBag.GrandTotal = grandTotal.ToString("c2");
-                return View(ordersVM);
+                return View(ordersVM.OrderByDescending(o => o.OrderDate));
             }
             catch (Exception ex)
             {
@@ -362,11 +362,14 @@ namespace CapstoneGroupProject.Controllers
 
         private OrderViewModel OrderToOrderVM(Order order, string productDescription = "")
         {
+            var employee = _appDbContext.Employees.Find(order.EmployeeId);
+
             OrderViewModel orderVM = new OrderViewModel
             {
                 OrderID = order.OrderID,
                 OrderDate = order.OrderDate,
                 OrderTotal = order.OrderTotal,
+                EmployeeName = employee.FirstName + " " + employee.LastName,
                 OrderProducts = order.OrderProducts,
                 productDescriptions = productDescription
             };

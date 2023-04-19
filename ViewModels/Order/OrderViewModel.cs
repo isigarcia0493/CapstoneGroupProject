@@ -25,6 +25,9 @@ namespace CapstoneGroupProject.ViewModels.Order
 
         public decimal OrderTotal { get; set; }
 
+        [DisplayName("Employee")]
+        public string EmployeeName { get; set; }
+
         [DisplayName("Ordered Items")]
         public List<ProductViewModel> OrderProducts { get; set; }
 

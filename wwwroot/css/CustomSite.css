@@ -16,7 +16,7 @@ footer {
     margin-left: auto;
     background-color: #fff;
     box-shadow: 0px 0px 20px black;
-    height: 900px;
+    min-height: 90vh;
 }
 
 .header {
